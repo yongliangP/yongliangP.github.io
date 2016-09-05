@@ -77,19 +77,26 @@
 
 
 
-<meta name="description" content="常用动画类型:  1    fade = 1,                   //淡入淡出  2    push,                       //推挤  3    reveal,                     //揭开  4    moveIn,                     //覆盖  5    cube,">
+<meta name="description" content="CATransition之简单的转场动画
+
+常用动画类型:  1    fade = 1,                   //淡入淡出  2    push,                       //推挤  3    reveal,                     //揭开  4    moveIn,                     //覆盖  5    cube,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CATransition之简单的转场动画">
+<meta property="og:title" content="iOS中那些简单的动画">
 <meta property="og:url" content="http://yoursite.com/2016/08/24/CATransion/index.html">
 <meta property="og:site_name" content="iceMaple的博客">
-<meta property="og:description" content="常用动画类型:  1    fade = 1,                   //淡入淡出  2    push,                       //推挤  3    reveal,                     //揭开  4    moveIn,                     //覆盖  5    cube,">
+<meta property="og:description" content="CATransition之简单的转场动画
+
+常用动画类型:  1    fade = 1,                   //淡入淡出  2    push,                       //推挤  3    reveal,                     //揭开  4    moveIn,                     //覆盖  5    cube,">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-1e4af56293577f06.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-f86f4c9c818321d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-f50ddba5966a00c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-09-05T07:54:09.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-af7b2b89e11f19fb.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2016-09-05T08:44:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CATransition之简单的转场动画">
-<meta name="twitter:description" content="常用动画类型:  1    fade = 1,                   //淡入淡出  2    push,                       //推挤  3    reveal,                     //揭开  4    moveIn,                     //覆盖  5    cube,">
+<meta name="twitter:title" content="iOS中那些简单的动画">
+<meta name="twitter:description" content="CATransition之简单的转场动画
+
+常用动画类型:  1    fade = 1,                   //淡入淡出  2    push,                       //推挤  3    reveal,                     //揭开  4    moveIn,                     //覆盖  5    cube,">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1429107-1e4af56293577f06.gif?imageMogr2/auto-orient/strip">
 
 
@@ -113,7 +120,7 @@
 
   <link rel="canonical" href="http://yoursite.com/2016/08/24/CATransion/"/>
 
-  <title> CATransition之简单的转场动画 | iceMaple的博客 </title>
+  <title> iOS中那些简单的动画 | iceMaple的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +260,7 @@
             
             
               
-                CATransition之简单的转场动画
+                iOS中那些简单的动画
               
             
           </h1>
@@ -312,7 +319,7 @@
       
 
       
-        <p><img src="http://upload-images.jianshu.io/upload_images/1429107-1e4af56293577f06.gif?imageMogr2/auto-orient/strip" alt="CATransitionDemo2.gif"></p>
+        <h2 id="CATransition之简单的转场动画"><a href="#CATransition之简单的转场动画" class="headerlink" title="CATransition之简单的转场动画"></a>CATransition之简单的转场动画</h2><p><img src="http://upload-images.jianshu.io/upload_images/1429107-1e4af56293577f06.gif?imageMogr2/auto-orient/strip" alt="CATransitionDemo2.gif"></p>
 <ul>
 <li>常用动画类型:<br>  1    fade = 1,                   //淡入淡出<br>  2    push,                       //推挤<br>  3    reveal,                     //揭开<br>  4    moveIn,                     //覆盖<br>  5    cube,                       //立方体<br>  6    suckEffect,                 //吮吸<br>  7    oglFlip,                    //翻转<br>  8    rippleEffect,               //波纹<br>  9    pageCurl,                   //翻页<br>  10    pageUnCurl,                 //反翻页<br>  11    cameraIrisHollowOpen,       //开镜头<br>  12    cameraIrisHollowClose,      //关镜头</li>
 </ul>
@@ -321,11 +328,18 @@
 <li>常用方向参数(子类型):<br>   13    UIViewAnimationTransitionCurlDown, //下翻页<br>   14    UIViewAnimationTransitionCurlUp,  //上翻页<br>   15    UIViewAnimationTransitionFlipFromLeft,  //左翻转<br>   16    UIViewAnimationTransitionFlipFromRight, //右翻转</li>
 </ul>
 <hr>
-<p><img src="http://upload-images.jianshu.io/upload_images/1429107-f50ddba5966a00c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-09-02 下午6.24.49.png"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">-(void)animationWithType:(NSString*)type</div><div class="line">&#123;</div><div class="line"></div><div class="line">    //- 创建一个转场动画:</div><div class="line">    CATransition *transition = [CATransition animation];</div><div class="line">    //transition.autoreverses = YES;    //回退动画（动画可逆，即循环）</div><div class="line">    //transition.duration = 10.0f;</div><div class="line">    //transition.repeatCount = MAXFLOAT;</div><div class="line">    transition.repeatCount = 5;</div><div class="line">    //transition.removedOnCompletion = NO;</div><div class="line">    //transition.fillMode = kCAFillModeForwards;//removedOnCompletion,fillMode配合使用保持动画完成效果</div><div class="line">    //transition.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</div><div class="line"></div><div class="line">    //    - 确定动画类型:</div><div class="line">    transition.type = type;</div><div class="line">    </div><div class="line">    //    - 确定子类型(方向等)</div><div class="line">    transition.subtype = kCATransitionFromLeft;</div><div class="line">    </div><div class="line">    //    - 确定动画时间</div><div class="line">    transition.duration = 1;</div><div class="line">    </div><div class="line">    //    - 添加动画</div><div class="line">    [self.imageView.layer addAnimation:transition forKey:nil];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>使用时只用传你的想要的动画类型就好，私有API只能通过字符串使用哈。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self animationWithType:self.dataArray[indexPath.row]];</div></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-f50ddba5966a00c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-09-02 下午6.24.49.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">-(void)animationWithType:(NSString*)type</div><div class="line">&#123;</div><div class="line"></div><div class="line">    //- 创建一个转场动画:</div><div class="line">    CATransition *transition = [CATransition animation];</div><div class="line">    //transition.autoreverses = YES;    //回退动画（动画可逆，即循环）</div><div class="line">    //transition.duration = 10.0f;</div><div class="line">    //transition.repeatCount = MAXFLOAT;</div><div class="line">    transition.repeatCount = 5;</div><div class="line">    //transition.removedOnCompletion = NO;</div><div class="line">    //transition.fillMode = kCAFillModeForwards;//removedOnCompletion,fillMode配合使用保持动画完成效果</div><div class="line">    //transition.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</div><div class="line"></div><div class="line">    //    - 确定动画类型:</div><div class="line">    transition.type = type;</div><div class="line">    </div><div class="line">    //    - 确定子类型(方向等)</div><div class="line">    transition.subtype = kCATransitionFromLeft;</div><div class="line">    </div><div class="line">    //    - 确定动画时间</div><div class="line">    transition.duration = 1;</div><div class="line">    </div><div class="line">    //    - 添加动画</div><div class="line">    [self.imageView.layer addAnimation:transition forKey:nil];</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用时只用传你的想要的动画类型就好，私有API只能通过字符串使用哈。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self animationWithType:self.dataArray[indexPath.row]];</div></pre></td></tr></table></figure>
 <p>DEMO地址：<a href="https://github.com/yongliangP/CATransitionDemo" target="_blank" rel="external">https://github.com/yongliangP/CATransitionDemo</a></p>
-<p>如果想了解CAAnimation动画请看我的另一篇文章，<a href="http://www.jianshu.com/p/c676ac19bd68" target="_blank" rel="external">CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）</a></p>
-<p>有用请点喜欢❤️</p>
+<hr>
+<h2 id="CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）"><a href="#CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）" class="headerlink" title="CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）"></a>CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）</h2><p><img src="http://upload-images.jianshu.io/upload_images/1429107-af7b2b89e11f19fb.gif?imageMogr2/auto-orient/strip" alt=""><br>话不多说上代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"> 1.呼吸动画</div><div class="line">    CABasicAnimation *animation =[CABasicAnimation animationWithKeyPath:@&quot;opacity&quot;];</div><div class="line">    animation.fromValue = [NSNumber numberWithFloat:1.0f];</div><div class="line">    animation.toValue = [NSNumber numberWithFloat:0.0f];</div><div class="line">    animation.autoreverses = YES;    //回退动画（动画可逆，即循环）</div><div class="line">    animation.duration = 1.0f;</div><div class="line">    animation.repeatCount = MAXFLOAT;</div><div class="line">    animation.removedOnCompletion = NO;</div><div class="line">    animation.fillMode = kCAFillModeForwards;//removedOnCompletion,fillMode配合使用保持动画完成效果</div><div class="line">    animation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</div><div class="line">    [self.alphaTagButton.layer addAnimation:animation forKey:@&quot;aAlpha&quot;];  </div><div class="line"></div><div class="line">2.摇摆动画</div><div class="line">    //设置旋转原点</div><div class="line">    self.sharkTagButton.layer.anchorPoint = CGPointMake(0.5, 0);</div><div class="line">    CABasicAnimation* rotationAnimation = [CABasicAnimation animationWithKeyPath:@&quot;transform.rotation.z&quot;];</div><div class="line">    //角度转弧度（这里用1，-1简单处理一下）</div><div class="line">    rotationAnimation.toValue = [NSNumber numberWithFloat:1];</div><div class="line">    rotationAnimation.fromValue = [NSNumber numberWithFloat:-1];</div><div class="line">    rotationAnimation.duration = 1.0f;</div><div class="line">    rotationAnimation.repeatCount = MAXFLOAT;</div><div class="line">    rotationAnimation.removedOnCompletion = NO;</div><div class="line">    rotationAnimation.autoreverses = YES;</div><div class="line">    rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">    rotationAnimation.fillMode = kCAFillModeForwards;</div><div class="line">    [self.sharkTagButton.layer addAnimation:rotationAnimation forKey:@&quot;revItUpAnimation&quot;];</div></pre></td></tr></table></figure>
+<hr>
+<p>20160831更新：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">3、陀螺仪&amp;加速仪的动画</div><div class="line">    self.motionManager = [[CMMotionManager alloc] init];</div><div class="line">    self.motionManager.deviceMotionUpdateInterval = 1.0f/100.0f; //1秒100次</div><div class="line">    self.sharkTagButton.layer.anchorPoint = CGPointMake(0.5, 0);</div><div class="line">    [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) &#123;</div><div class="line">        if(fabs(motion.attitude.roll)&lt;1.0f)</div><div class="line">        &#123;</div><div class="line">            [UIView animateWithDuration:0.6 animations:^&#123;</div><div class="line">                self.sharkTagButton.layer.transform = CATransform3DMakeRotation(-(motion.attitude.roll), 0, 0, 1);</div><div class="line">            &#125;];</div><div class="line">        &#125;else if (fabs(motion.attitude.roll)&lt;1.5f)</div><div class="line">        &#123;</div><div class="line">            [UIView animateWithDuration:0.6 animations:^&#123;</div><div class="line">                int s;</div><div class="line">                if (motion.attitude.roll&gt;0)</div><div class="line">                &#123;</div><div class="line">                    s=-1;</div><div class="line">                &#125;else</div><div class="line">                &#123;</div><div class="line">                    s = 1;</div><div class="line">                &#125;</div><div class="line">                self.sharkTagButton.layer.transform = CATransform3DMakeRotation(s*M_PI_2, 0, 0, 1);</div><div class="line">            &#125;];</div><div class="line">        &#125;</div><div class="line">        if ((motion.attitude.pitch)&lt;0)</div><div class="line">        &#123;</div><div class="line">            [UIView animateWithDuration:0.6 animations:^&#123;</div><div class="line">                self.sharkTagButton.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);</div><div class="line">            &#125;];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
+<p>Demo地址：<br><a href="https://github.com/yongliangP/CABasicAnimationDemo" target="_blank" rel="external">https://github.com/yongliangP/CABasicAnimationDemo</a></p>
 
       
     </div>
@@ -517,7 +531,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CATransition之简单的转场动画"><span class="nav-number">1.</span> <span class="nav-text">CATransition之简单的转场动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）"><span class="nav-number">3.</span> <span class="nav-text">CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）</span></a></li></ol></div>
             
           </div>
         </section>
