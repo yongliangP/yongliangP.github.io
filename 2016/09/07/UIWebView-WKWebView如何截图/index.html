@@ -114,7 +114,7 @@ UIWebView的截图功能还是很容易实现的,可是WKWebView的截图，嗯�
 
 3.1 说说UIKit的截图(其">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-7012f0e38a565d9e.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2016-09-07T04:18:59.000Z">
+<meta property="og:updated_time" content="2016-09-07T04:28:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UIWebView&WKWebView如何截图">
 <meta name="twitter:description" content="先看效果
@@ -375,36 +375,17 @@ UIWebView的截图功能还是很容易实现的,可是WKWebView的截图，嗯�
 <p>得到绘制好的上下文</p>
 </blockquote>
 <ul>
-<li><p>3.2 无(忘了要写啥了)</p>
-<ul>
+<li>3.2 无(忘了要写啥了)<ul>
 <li>4 UIWebView的截图   <blockquote>
 <p>网上的很多方法就是循环遍历子视图，然后组合起来，个人觉得不够简单，我不会承认用网上的方法我失败了才出此下策的</p>
 </blockquote>
 </li>
 </ul>
-<pre><code>[self screenShotWithScrollView:webView.scrollView];
-</code></pre><p>封装方法</p>
-<pre><code>- (UIImage *)screenShotWithScrollView:(UIScrollView *)scrollView
-</code></pre><p>   {</p>
-<pre><code> UIImage* image;
-
- UIGraphicsBeginImageContextWithOptions(scrollView.contentSize, NO, [UIScreen mainScreen].scale);
-{
- CGPoint savedContentOffset = scrollView.contentOffset;
- CGRect savedFrame = scrollView.frame;
- scrollView.contentOffset = CGPointZero;
- scrollView.frame = CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height);
- [scrollView.layer renderInContext: UIGraphicsGetCurrentContext()];
- image = UIGraphicsGetImageFromCurrentImageContext();
- scrollView.contentOffset = savedContentOffset;
- scrollView.frame = savedFrame;
-}
-</code></pre><p>   UIGraphicsEndImageContext();</p>
-<p>   if (image != nil)<br>   {</p>
-<pre><code>return image;
-</code></pre><p>   }<br>   return nil;<br>   }</p>
 </li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self screenShotWithScrollView:webView.scrollView];</div></pre></td></tr></table></figure>
+<p>封装方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">- (UIImage \*)screenShotWithScrollView:(UIScrollView \*)scrollView</div><div class="line">&#123;</div><div class="line">UIImage \* image;</div><div class="line"></div><div class="line">UIGraphicsBeginImageContextWithOptions(scrollView.contentSize, NO, [UIScreen mainScreen].scale);</div><div class="line">&#123;</div><div class="line">CGPoint savedContentOffset = scrollView.contentOffset;</div><div class="line">CGRect savedFrame = scrollView.frame;</div><div class="line">scrollView.contentOffset = CGPointZero;</div><div class="line">scrollView.frame = CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height);</div><div class="line">[scrollView.layer renderInContext: UIGraphicsGetCurrentContext()];</div><div class="line">image = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">scrollView.contentOffset = savedContentOffset;</div><div class="line">scrollView.frame = savedFrame;</div><div class="line">&#125;</div><div class="line">UIGraphicsEndImageContext();</div><div class="line"></div><div class="line">if (image != nil)</div><div class="line">&#123;</div><div class="line">return image;</div><div class="line">&#125;</div><div class="line">return nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>5 WKWebView的截图<blockquote>
 <p>同上，嗯，是的，就是用UIWebView请求一遍再截取UIWebView的图就行，在截完图释放就好，看了一下运存，暂时没问题</p>
