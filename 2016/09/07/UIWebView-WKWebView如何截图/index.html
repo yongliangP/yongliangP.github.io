@@ -77,55 +77,63 @@
 
 
 
-<meta name="description" content="一、简单说明. 1 . 什么是FMDB
+<meta name="description" content="先看效果
 
-FMDB是iOS平台的SQLite数据库框架
-FMDB以OC的方式封装了SQLite的C语言API
 
-2 . FMDB的优点
+1 什么时候会用到这个？
 
-使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码
-对比苹果自带的Core Data框架，更加轻量级和灵活
-提供了多线程安全的数据库操作方法，有效地防止数据混乱
+分享，目前笔者能想到的只有分享，因为要用。
 
-3 .FMDB的github地址
 
-https://githu">
+2 为什么要写这个？
+
+UIWebView的截图功能还是很容易实现的,可是WKWebView的截图，嗯，一片灰色。。。在笔者逛了Stack Overflow,里面并没有很好的方法，于是，只能自己动手了，so，可能方法并不是很好，但是足矣解决问题，有时间再研究。
+
+
+3 开工
+
+3.1 说说UIKit的截图(其">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FMDB简单介绍以及数据库sqlite常用到的语句">
-<meta property="og:url" content="http://yoursite.com/2016/09/06/FMDB简单介绍以及数据库sqlite常用到的语句/index.html">
+<meta property="og:title" content="UIWebView&WKWebView如何截图">
+<meta property="og:url" content="http://yoursite.com/2016/09/07/UIWebView-WKWebView如何截图/index.html">
 <meta property="og:site_name" content="iceMaple的博客">
-<meta property="og:description" content="一、简单说明. 1 . 什么是FMDB
+<meta property="og:description" content="先看效果
 
-FMDB是iOS平台的SQLite数据库框架
-FMDB以OC的方式封装了SQLite的C语言API
 
-2 . FMDB的优点
+1 什么时候会用到这个？
 
-使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码
-对比苹果自带的Core Data框架，更加轻量级和灵活
-提供了多线程安全的数据库操作方法，有效地防止数据混乱
+分享，目前笔者能想到的只有分享，因为要用。
 
-3 .FMDB的github地址
 
-https://githu">
-<meta property="og:updated_time" content="2016-09-06T05:17:37.000Z">
+2 为什么要写这个？
+
+UIWebView的截图功能还是很容易实现的,可是WKWebView的截图，嗯，一片灰色。。。在笔者逛了Stack Overflow,里面并没有很好的方法，于是，只能自己动手了，so，可能方法并不是很好，但是足矣解决问题，有时间再研究。
+
+
+3 开工
+
+3.1 说说UIKit的截图(其">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-7012f0e38a565d9e.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2016-09-07T04:18:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FMDB简单介绍以及数据库sqlite常用到的语句">
-<meta name="twitter:description" content="一、简单说明. 1 . 什么是FMDB
+<meta name="twitter:title" content="UIWebView&WKWebView如何截图">
+<meta name="twitter:description" content="先看效果
 
-FMDB是iOS平台的SQLite数据库框架
-FMDB以OC的方式封装了SQLite的C语言API
 
-2 . FMDB的优点
+1 什么时候会用到这个？
 
-使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码
-对比苹果自带的Core Data框架，更加轻量级和灵活
-提供了多线程安全的数据库操作方法，有效地防止数据混乱
+分享，目前笔者能想到的只有分享，因为要用。
 
-3 .FMDB的github地址
 
-https://githu">
+2 为什么要写这个？
+
+UIWebView的截图功能还是很容易实现的,可是WKWebView的截图，嗯，一片灰色。。。在笔者逛了Stack Overflow,里面并没有很好的方法，于是，只能自己动手了，so，可能方法并不是很好，但是足矣解决问题，有时间再研究。
+
+
+3 开工
+
+3.1 说说UIKit的截图(其">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1429107-7012f0e38a565d9e.gif?imageMogr2/auto-orient/strip">
 
 
 
@@ -146,9 +154,9 @@ https://githu">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/09/06/FMDB简单介绍以及数据库sqlite常用到的语句/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/09/07/UIWebView-WKWebView如何截图/"/>
 
-  <title> FMDB简单介绍以及数据库sqlite常用到的语句 | iceMaple的博客 </title>
+  <title> UIWebView&WKWebView如何截图 | iceMaple的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -288,7 +296,7 @@ https://githu">
             
             
               
-                FMDB简单介绍以及数据库sqlite常用到的语句
+                UIWebView&WKWebView如何截图
               
             
           </h1>
@@ -300,8 +308,8 @@ https://githu">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-06T12:29:33+08:00" content="2016-09-06">
-              2016-09-06
+            <time itemprop="dateCreated" datetime="2016-09-07T12:07:54+08:00" content="2016-09-07">
+              2016-09-07
             </time>
           </span>
 
@@ -328,100 +336,84 @@ https://githu">
       
 
       
-        <h4 id="一、简单说明"><a href="#一、简单说明" class="headerlink" title="一、简单说明"></a>一、简单说明</h4><p>.<br> 1 . 什么是FMDB</p>
+        <p>先看效果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-7012f0e38a565d9e.gif?imageMogr2/auto-orient/strip" alt="ScreenShotDemo.gif"></p>
+<ul>
+<li><p>1 什么时候会用到这个？</p>
 <blockquote>
-<p>FMDB是iOS平台的SQLite数据库框架</p>
-<p>FMDB以OC的方式封装了SQLite的C语言API</p>
+<p>分享，目前笔者能想到的只有分享，因为要用。</p>
 </blockquote>
-<p>2 . FMDB的优点</p>
+</li>
+<li><p>2 为什么要写这个？</p>
 <blockquote>
-<p>使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码</p>
-<p>对比苹果自带的Core Data框架，更加轻量级和灵活</p>
-<p>提供了多线程安全的数据库操作方法，有效地防止数据混乱</p>
+<p>UIWebView的截图功能还是很容易实现的,可是WKWebView的截图，嗯，一片灰色。。。<br>在笔者逛了Stack Overflow,里面并没有很好的方法，于是，只能自己动手了，so，可能方法并不是很好，但是足矣解决问题，有时间再研究。</p>
 </blockquote>
-<p>3 .FMDB的github地址</p>
+</li>
+<li><p>3 开工</p>
+<ul>
+<li>3.1 说说UIKit的截图(其实是绘图)<br>3.1.1 创建一个基于位图的上下文（context）,并将其设置为当前上下文</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(1)UIGraphicsBeginImageContext(CGSize size)</div><div class="line">(2)UIGraphicsBeginImageContextWithOptions(CGSize size, BOOL opaque, CGFloat scale)</div></pre></td></tr></table></figure>
 <blockquote>
-<p><a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">https://github.com/ccgus/fmdb</a></p>
+<p>区别：<br>UIGraphicsBeginImageContext<br>参数size为新创建的位图上下文的大小。该函数的功能同UIGraphicsBeginImageContextWithOptions的功能相同，相当与UIGraphicsBeginImageContextWithOptions的opaque参数为NO,scale因子为1.0。<br>UIGraphicsBeginImageContextWithOptions<br>参数size——同UIGraphicsBeginImageContext<br>参数opaque—透明开关，如果图形完全不用透明，设置为YES以优化位图的存储。<br>参数scale—–缩放因子</p>
 </blockquote>
-<h4 id="二、关于数据库的增删改查"><a href="#二、关于数据库的增删改查" class="headerlink" title="二、关于数据库的增删改查"></a>二、关于数据库的增删改查</h4><p>.<br>在FMDB中，除查询以外的所有操作，都称为“更新”</p>
-<p>create、drop、insert、update、delete等</p>
-<p>1 .使用executeUpdate:方法执行更新<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (BOOL)executeUpdate:(NSString*)sql, ...</div><div class="line"></div><div class="line">- (BOOL)executeUpdateWithFormat:(NSString*)format, ...</div><div class="line"></div><div class="line">- (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments</div></pre></td></tr></table></figure></p>
-<p>2 .查询方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (FMResultSet *)executeQuery:(NSString*)sql, ...</div><div class="line"></div><div class="line">- (FMResultSet *)executeQueryWithFormat:(NSString*)format, ...</div><div class="line"></div><div class="line">- (FMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray *)arguments</div></pre></td></tr></table></figure></p>
-<h4 id="三、关于使用"><a href="#三、关于使用" class="headerlink" title="三、关于使用"></a>三、关于使用</h4><p>.<br>1 . 什么场景下使用</p>
+<p>   3.1.2获取上下文</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIGraphicsGetCurrentContext()</div></pre></td></tr></table></figure>
 <blockquote>
-<p>为了提升用户体验，一般在断网环境下读取数据库存取的数据，不至于让你的App一片空白。当然，这个前提是你已经在用网的环境下缓存了信息到数据库。除此外使用最多的比如聊天记录的存储。</p>
+<p>UIGraphicsGetCurrentContext 来取得上下文，这个上下文表示当前的view的size大小</p>
 </blockquote>
-<p>2 .与文件存储相比的优点</p>
+<p>   3.1.3绘制</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)renderInContext:(CGContextRef)cox;</div></pre></td></tr></table></figure>
 <blockquote>
-<p>个人觉得文件存储太多会太乱，数据库便于管理，当然这个是根据大家自己的App的实际情况来定的。</p>
+<p>参数就是获取的上下文，指明绘制的地方</p>
 </blockquote>
-<p>3 .怎么使用</p>
+<p>   3.1.4完成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIGraphicsGetImageFromCurrentImageContext()</div></pre></td></tr></table></figure>
 <blockquote>
-<p>在工程中导入FMDB,当然在使用FMDB的时候记得导入libsqlite3.0.dylib。</p>
+<p>得到绘制好的上下文</p>
 </blockquote>
-<p>4 .为什么不用CoreData</p>
-<blockquote>
-<p>这个具体项目而定，数据同时存储量、读取量不大，表间关系简单的话推荐FMDB</p>
+<ul>
+<li><p>3.2 无(忘了要写啥了)</p>
+<ul>
+<li>4 UIWebView的截图   <blockquote>
+<p>网上的很多方法就是循环遍历子视图，然后组合起来，个人觉得不够简单，我不会承认用网上的方法我失败了才出此下策的</p>
 </blockquote>
-<h4 id="附：以下是sqlite常用到的语句"><a href="#附：以下是sqlite常用到的语句" class="headerlink" title="附：以下是sqlite常用到的语句"></a>附：以下是sqlite常用到的语句</h4><p><strong>注：一定要注意表中插入数据(字符串是’ ‘,整数不加’ ‘)</strong></p>
-<p>  1 .创建表</p>
-<blockquote>
-<p>create table if not exists 表名<br>     (<br>     字段名 类型(字符个数，可以省略) primary key autoincrement,<br>     字段名 类型(字符个数，可以省略) null(可以省略),<br>     字段名 类型(字符个数，可以省略) not null(可以省略),<br>     字段名 类型(字符个数，可以省略) not null(可以省略)<br>     );<br>     注意类型有integer,text,blob,boolean,varchar等<br>     例如：<br>     create table if not exists Book<br>     (<br>     id integer primary key autoincrement,<br>     name text,<br>     url text,<br>     des text<br>     );</p>
+</li>
+</ul>
+<pre><code>[self screenShotWithScrollView:webView.scrollView];
+</code></pre><p>封装方法</p>
+<pre><code>- (UIImage *)screenShotWithScrollView:(UIScrollView *)scrollView
+</code></pre><p>   {</p>
+<pre><code> UIImage* image;
+
+ UIGraphicsBeginImageContextWithOptions(scrollView.contentSize, NO, [UIScreen mainScreen].scale);
+{
+ CGPoint savedContentOffset = scrollView.contentOffset;
+ CGRect savedFrame = scrollView.frame;
+ scrollView.contentOffset = CGPointZero;
+ scrollView.frame = CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height);
+ [scrollView.layer renderInContext: UIGraphicsGetCurrentContext()];
+ image = UIGraphicsGetImageFromCurrentImageContext();
+ scrollView.contentOffset = savedContentOffset;
+ scrollView.frame = savedFrame;
+}
+</code></pre><p>   UIGraphicsEndImageContext();</p>
+<p>   if (image != nil)<br>   {</p>
+<pre><code>return image;
+</code></pre><p>   }<br>   return nil;<br>   }</p>
+</li>
+</ul>
+<ul>
+<li>5 WKWebView的截图<blockquote>
+<p>同上，嗯，是的，就是用UIWebView请求一遍再截取UIWebView的图就行，在截完图释放就好，看了一下运存，暂时没问题</p>
 </blockquote>
-<p>   2 .表中插入数据(字符串是’’,整数不加’’)</p>
-<blockquote>
-<p>insert into 表名 (字段名,字段名,字段名) values (‘’,’’,’’);<br>     例如<br>     insert into Book (name,url,des) values (‘霍金全集’,’www.baidu.com’,’描述’);</p>
-</blockquote>
-<p>   3 .查询  where条件判断  order by 排序</p>
-<blockquote>
-<p>select 字段名（*代表所有字段，如果有多个字段用英文的,分割） from 表名字 where 字段名=‘’ order by 字段名 desc|asc;<br>    注意：<br>1,where判断，对于integer：&gt; , &gt;= ,&lt; , &lt;=, =,between 字段 and 字段 等<br>     2,desc降序  asc升序<br>     例如：<br>     （1）查询表中所有字段数据<br>     select  *  from Book;<br>     select name,url from Book;<br>     （2）查询判断的条件<br>     select * from Book where 字段名=’’;<br>     （3）select name,url from Book where name = ‘钢铁是怎么炼成的’</p>
-</blockquote>
-<p>   4 .模糊查询</p>
-<blockquote>
-<p>select 字段名 from 表名 where 字段名 like ‘%关键字%’;<br>     例如<br>     select * from Book where  name like ‘%钢铁%’;</p>
-</blockquote>
-<p>   5 .IN查询(或者)</p>
-<blockquote>
-<p>select 字段名 from 表名 where 字段名 in (‘关键字’,’关键字’);<br>     例如：<br>     select * from Book where name in (‘我的青春’,’钢铁是怎么炼成的’);</p>
-</blockquote>
-<p>   6 .更新</p>
-<blockquote>
-<p>update 表名 set 字段名 = ‘关键字’ where 字段名 = 关键字<br>     例如：<br>     update Book set url=’www.aaa.com’ where id = 2</p>
-</blockquote>
-<p>   7 .删除数据</p>
-<blockquote>
-<p>(1)  删除指定数据<br>delete from 表名 where 字段名 = ‘关键字’;<br>     例如：<br>   delete from Book where name = ‘霍金全集’;<br>    (2)  删除整张表里面的所有数据<br>     delete from 表名</p>
-</blockquote>
-<p>   8 .删除整张表</p>
-<blockquote>
-<p>drop table 表名;</p>
-</blockquote>
-<p>   9 .添加字段</p>
-<blockquote>
-<p>alter table 表名 add column 字段名 类型;<br>      例如：<br>     alter table Book add column price integer;</p>
-</blockquote>
-<p>  10 .求和</p>
-<blockquote>
-<p>select sum(字段名) from 表名<br>      例如：<br>     select sum(age) from User</p>
-</blockquote>
-<p>   11 .求平均值</p>
-<blockquote>
-<p>select avg(字段名) from 表名<br>     例如：<br>     select avg(age) from User</p>
-</blockquote>
-<p>   12 .求最大值</p>
-<blockquote>
-<p>select max(字段名) from 表名<br>      例如：<br>     select max(age) from User</p>
-</blockquote>
-<p>   13 .求最小值</p>
-<blockquote>
-<p>select min(字段名) from 表名<br>     例如：<br>     select min(age) from User</p>
-</blockquote>
-<p>  14 .求元组个数</p>
-<blockquote>
-<p>select count(*) from 表名<br>     select count(distinct|all 字段名) from 表名<br>     如果指定DISTINCT短语，则表示在计算时要取消指定列中的重复值。如果不指定DISTINCT短语或指定ALL短语（ALL为缺省值），则表示不取消重复值。<br>     例如：<br>     select count(*) from User<br>     select count(distinct name) from User;</p>
-</blockquote>
-<p>简单的封装FMDB示例，有用就请喜欢哦~<br>DEMO地址：<a href="https://github.com/yongliangP/YLFMDBDemo" target="_blank" rel="external">https://github.com/yongliangP/YLFMDBDemo</a></p>
-<p><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><br>            <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span></p>
+</li>
+</ul>
+<p><strong>注：在UIWebView请求完数据的代理方法里面再截图</strong><br><strong>注：在UIWebView请求完数据的代理方法里面再截图</strong><br><strong>注：在UIWebView请求完数据的代理方法里面再截图</strong></p>
+<p>完结：如有更好的方法请多多指教</p>
+<p>惯例文末放Demo:<a href="https://github.com/yongliangP/WebViewCaptureDemo" target="_blank" rel="external">https://github.com/yongliangP/WebViewCaptureDemo</a></p>
 
       
     </div>
@@ -453,17 +445,13 @@ https://githu">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/05/随笔/" rel="next" title="随笔">
-                <i class="fa fa-chevron-left"></i> 随笔
+              <a href="/2016/09/06/FMDB简单介绍以及数据库sqlite常用到的语句/" rel="next" title="FMDB简单介绍以及数据库sqlite常用到的语句">
+                <i class="fa fa-chevron-left"></i> FMDB简单介绍以及数据库sqlite常用到的语句
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/09/07/UIWebView-WKWebView如何截图/" rel="prev" title="UIWebView&WKWebView如何截图">
-                UIWebView&WKWebView如何截图 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -611,7 +599,7 @@ https://githu">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、简单说明"><span class="nav-number">1.</span> <span class="nav-text">一、简单说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、关于数据库的增删改查"><span class="nav-number">2.</span> <span class="nav-text">二、关于数据库的增删改查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、关于使用"><span class="nav-number">3.</span> <span class="nav-text">三、关于使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附：以下是sqlite常用到的语句"><span class="nav-number">4.</span> <span class="nav-text">附：以下是sqlite常用到的语句</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
