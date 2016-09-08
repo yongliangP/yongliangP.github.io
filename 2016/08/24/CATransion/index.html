@@ -91,7 +91,8 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-f86f4c9c818321d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-f50ddba5966a00c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-af7b2b89e11f19fb.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2016-09-06T05:21:29.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-995e7ace9c93496f.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2016-09-08T07:17:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS中那些简单的动画">
 <meta name="twitter:description" content="CATransition之简单的转场动画
@@ -346,7 +347,144 @@
 <hr>
 <p>20160831更新：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">3、陀螺仪&amp;加速仪的动画</div><div class="line">    self.motionManager = [[CMMotionManager alloc] init];</div><div class="line">    self.motionManager.deviceMotionUpdateInterval = 1.0f/100.0f; //1秒100次</div><div class="line">    self.sharkTagButton.layer.anchorPoint = CGPointMake(0.5, 0);</div><div class="line">    [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) &#123;</div><div class="line">        if(fabs(motion.attitude.roll)&lt;1.0f)</div><div class="line">        &#123;</div><div class="line">            [UIView animateWithDuration:0.6 animations:^&#123;</div><div class="line">                self.sharkTagButton.layer.transform = CATransform3DMakeRotation(-(motion.attitude.roll), 0, 0, 1);</div><div class="line">            &#125;];</div><div class="line">        &#125;else if (fabs(motion.attitude.roll)&lt;1.5f)</div><div class="line">        &#123;</div><div class="line">            [UIView animateWithDuration:0.6 animations:^&#123;</div><div class="line">                int s;</div><div class="line">                if (motion.attitude.roll&gt;0)</div><div class="line">                &#123;</div><div class="line">                    s=-1;</div><div class="line">                &#125;else</div><div class="line">                &#123;</div><div class="line">                    s = 1;</div><div class="line">                &#125;</div><div class="line">                self.sharkTagButton.layer.transform = CATransform3DMakeRotation(s*M_PI_2, 0, 0, 1);</div><div class="line">            &#125;];</div><div class="line">        &#125;</div><div class="line">        if ((motion.attitude.pitch)&lt;0)</div><div class="line">        &#123;</div><div class="line">            [UIView animateWithDuration:0.6 animations:^&#123;</div><div class="line">                self.sharkTagButton.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);</div><div class="line">            &#125;];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
-<p>Demo地址：<br><a href="https://github.com/yongliangP/CABasicAnimationDemo" target="_blank" rel="external">https://github.com/yongliangP/CABasicAnimationDemo</a></p>
+<hr>
+<h2 id="—20160908更新"><a href="#—20160908更新" class="headerlink" title="#—20160908更新"></a>#—20160908更新</h2><h2 id="CAKeyframeAnimation"><a href="#CAKeyframeAnimation" class="headerlink" title="CAKeyframeAnimation"></a>CAKeyframeAnimation</h2><p>先看图，就是那个在跑的小圆球，为了方便，把动画集成在了一个Demo里了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-995e7ace9c93496f.gif?imageMogr2/auto-orient/strip" alt="ScreenShotDemo2.gif"></p>
+<ul>
+<li><p>1 .简单介绍</p>
+<blockquote>
+<p>CAKeyframeAnimation是CApropertyAnimation的子类，跟CABasicAnimation的区别是：CABasicAnimation只能从一个数值(fromValue)变到另一个数值(toValue)，而CAKeyframeAnimation会使用一个NSArray保存这些数值，是一种更灵活的动画方式。</p>
+</blockquote>
+</li>
+<li><p>2 .属性介绍</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解读 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td>NSArray对象，里面的元素称为”关键帧”(keyframe)。动画对象会在指定的时间(duration)内，依次显示values数组中的每一个关键帧</td>
+</tr>
+<tr>
+<td>path</td>
+<td>可以设置一个CGPathRef\CGMutablePathRef,让层跟着路径移动。path只对CALayer的anchorPoint和position起作用。如果你设置了path，那么values将被忽略</td>
+</tr>
+<tr>
+<td>keyTimes</td>
+<td>可以为对应的关键帧指定对应的时间点,其取值范围为[0,1],keyTimes中的每一个时间值都对应values中的每一帧.当keyTimes没有设置的时候,各个关键帧的时间是平分的</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>3 .实现</p>
+<ul>
+<li>3.1 values方式实现</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">-(void)setUpCAKeyframeAnimationUseValues</div><div class="line">&#123;</div><div class="line"></div><div class="line">CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];</div><div class="line"></div><div class="line">animation.keyPath = @&quot;position&quot;;</div><div class="line"></div><div class="line">NSValue *value1 = [NSValue valueWithCGPoint:CGPointMake(50, 50)];</div><div class="line"></div><div class="line">NSValue *value2 = [NSValue valueWithCGPoint:CGPointMake(kWindowWidth - 50, 50)];</div><div class="line"></div><div class="line">NSValue *value3 = [NSValue valueWithCGPoint:CGPointMake(kWindowWidth - 50, kWindowHeight-50)];</div><div class="line"></div><div class="line">NSValue *value4 = [NSValue valueWithCGPoint:CGPointMake(50, kWindowHeight-50)];</div><div class="line"></div><div class="line">NSValue *value5 = [NSValue valueWithCGPoint:CGPointMake(50, 50)];</div><div class="line"></div><div class="line">animation.values = @[value1,value2,value3,value4,value5];</div><div class="line">animation.repeatCount = MAXFLOAT;</div><div class="line"></div><div class="line">animation.removedOnCompletion = NO;</div><div class="line"></div><div class="line">animation.fillMode = kCAFillModeForwards;</div><div class="line"></div><div class="line">animation.duration = 6.0f;</div><div class="line"></div><div class="line">animation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line"></div><div class="line">[self.keyButton.layer addAnimation:animation forKey:@&quot;values&quot;];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>3.2 path方式实现</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">-(void)setUpCAKeyframeAnimationUsePath</div><div class="line">&#123;</div><div class="line">    CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];</div><div class="line">    </div><div class="line">    animation.keyPath = @&quot;position&quot;;</div><div class="line">    </div><div class="line">    CGMutablePathRef path = CGPathCreateMutable();</div><div class="line">    </div><div class="line">    //矩形线路</div><div class="line">    CGPathAddRect(path, NULL, CGRectMake(50,50, kWindowWidth - 100,kWindowHeight - 100));</div><div class="line">    </div><div class="line">    animation.path=path;</div><div class="line">    </div><div class="line">    CGPathRelease(path);</div><div class="line">    </div><div class="line">    animation.repeatCount = MAXFLOAT;</div><div class="line">    </div><div class="line">    animation.removedOnCompletion = NO;</div><div class="line">    </div><div class="line">    animation.fillMode = kCAFillModeForwards;</div><div class="line">    </div><div class="line">    animation.duration = 10.0f;</div><div class="line">    </div><div class="line">    animation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">    </div><div class="line">    [self.keyButton.layer addAnimation:animation forKey:@&quot;path&quot;];</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>3.3 keyTimes演示</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-(void)setUpCAKeyframeAnimationUsekeyTimes</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];</div><div class="line">//    animation.keyPath = @&quot;transform.translation.x&quot;;</div><div class="line">    animation.keyPath = @&quot;position.x&quot;;</div><div class="line">    animation.values = @[@0, @20, @-20, @20, @0];</div><div class="line">    animation.keyTimes = @[ @0, @(1 / 6.0), @(3 / 6.0), @(5 / 6.0), @1 ];</div><div class="line">    animation.duration = 0.5;</div><div class="line">    animation.additive = YES;</div><div class="line">    [self.sharkTagButton.layer addAnimation:animation forKey:@&quot;keyTimes&quot;];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>附：关于keyPath你可能用到的属性</strong></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解读 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transform.rotation.x</td>
+<td>围绕x轴翻转。y,z同理 参数：角度</td>
+</tr>
+<tr>
+<td>transform.rotation</td>
+<td>默认围绕z轴</td>
+</tr>
+<tr>
+<td>transform.scale.x</td>
+<td>x方向缩放。y,z同理</td>
+</tr>
+<tr>
+<td>transform.scale</td>
+<td>所有方向缩放</td>
+</tr>
+<tr>
+<td>transform.translation.x</td>
+<td>x轴方向移动,参数：x轴上的坐标。y,z同理</td>
+</tr>
+<tr>
+<td>transform.translation</td>
+<td>移动到的点</td>
+</tr>
+<tr>
+<td>zPosition</td>
+<td>平面的位置</td>
+</tr>
+<tr>
+<td>opacity</td>
+<td>透明度 </td>
+</tr>
+<tr>
+<td>backgroundColor</td>
+<td>背景颜色 参数：颜色 (id)[[UIColor redColor] CGColor]</td>
+</tr>
+<tr>
+<td>cornerRadius</td>
+<td>layer圆角</td>
+</tr>
+<tr>
+<td>borderWidth</td>
+<td>边框宽度</td>
+</tr>
+<tr>
+<td>bounds</td>
+<td>大小 参数：CGRect</td>
+</tr>
+<tr>
+<td>contents</td>
+<td>内容 参数：CGImage</td>
+</tr>
+<tr>
+<td>contentsRect</td>
+<td>可视内容 参数：CGRect 值是0～1之间的小数</td>
+</tr>
+<tr>
+<td>position</td>
+<td>位置,效果和transform.rotation差不多</td>
+</tr>
+<tr>
+<td>shadowColor</td>
+<td>阴影颜色</td>
+</tr>
+<tr>
+<td>shadowOffset</td>
+<td>阴影偏移</td>
+</tr>
+<tr>
+<td>shadowOpacity</td>
+<td>阴影透明度</td>
+</tr>
+<tr>
+<td>shadowRadius</td>
+<td>阴影角度</td>
+</tr>
+</tbody>
+</table>
+<p>照例放Demo<br>Demo地址：<br><a href="https://github.com/yongliangP/CABasicAnimationDemo" target="_blank" rel="external">https://github.com/yongliangP/CABasicAnimationDemo</a></p>
 
       
     </div>
@@ -542,7 +680,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CATransition之简单的转场动画"><span class="nav-number">1.</span> <span class="nav-text">CATransition之简单的转场动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）"><span class="nav-number">3.</span> <span class="nav-text">CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CATransition之简单的转场动画"><span class="nav-number">1.</span> <span class="nav-text">CATransition之简单的转场动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）"><span class="nav-number">3.</span> <span class="nav-text">CAAnimation之摇摆和呼吸动画（新增陀螺仪动画）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#—20160908更新"><span class="nav-number">4.</span> <span class="nav-text">#—20160908更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAKeyframeAnimation"><span class="nav-number">5.</span> <span class="nav-text">CAKeyframeAnimation</span></a></li></ol></div>
             
           </div>
         </section>
