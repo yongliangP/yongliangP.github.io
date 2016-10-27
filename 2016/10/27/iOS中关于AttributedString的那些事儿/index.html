@@ -77,12 +77,12 @@
 
 
 
-<meta name="description" content="###一、关于AttributedString在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAt">
+<meta name="description" content="一、关于AttributedString在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAttri">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS中关于AttributedString的那些事儿">
 <meta property="og:url" content="http://yoursite.com/2016/10/27/iOS中关于AttributedString的那些事儿/index.html">
 <meta property="og:site_name" content="iceMaple的博客">
-<meta property="og:description" content="###一、关于AttributedString在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAt">
+<meta property="og:description" content="一、关于AttributedString在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAttri">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-1c27719418986338.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-8a1fc3c3dffbb52f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-520dc797cf91673c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -104,10 +104,10 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-c87b580a890b282b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-4fdb453fd6e87481.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-4c13bfd22cbd4e6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-10-27T03:57:22.000Z">
+<meta property="og:updated_time" content="2016-10-27T04:39:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS中关于AttributedString的那些事儿">
-<meta name="twitter:description" content="###一、关于AttributedString在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAt">
+<meta name="twitter:description" content="一、关于AttributedString在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAttri">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1429107-1c27719418986338.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -318,7 +318,7 @@
       
 
       
-        <p>###一、关于AttributedString<br>在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAttributedString，不同的是，AttributedString对象多了一个Attribute的概念，一个AttributedString的对象包含很多的属性，每一个属性都有其对应的字符区域，使用NSRange来进行描述。下面简单讲解一下AttributedString的属性及用法。<br>官方学习链接<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/AttributedStrings/AttributedStrings.html" target="_blank" rel="external">Attributed String Programming Guide</a></p>
+        <h3 id="一、关于AttributedString"><a href="#一、关于AttributedString" class="headerlink" title="一、关于AttributedString"></a>一、关于AttributedString</h3><p>在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAttributedString，不同的是，AttributedString对象多了一个Attribute的概念，一个AttributedString的对象包含很多的属性，每一个属性都有其对应的字符区域，使用NSRange来进行描述。下面简单讲解一下AttributedString的属性及用法。<br>官方学习链接<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/AttributedStrings/AttributedStrings.html" target="_blank" rel="external">Attributed String Programming Guide</a></p>
 <ul>
 <li><p>1.方式一：</p>
 <blockquote>
@@ -334,8 +334,7 @@
 </ul>
 <p>//第二种方式<br>NSDictionary <em> dict = @{NSFontAttributeName:[UIFont fontWithName: @”Papyrus” size: 15], [UIFont fontWithName: @”Papyrus” size: 15]:style  };<br>NSMutableAttributedString </em> attrStr2 = [[NSMutableAttributedString alloc] initWithString:@”我是第二种方式，哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈” attributes:dict];<br>self.secondLabel.attributedText = attrStr2;</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1429107-1c27719418986338.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
-<p>###二 、 AttributedString究竟可以设置哪些属性</p>
-<ul>
+<h3 id="二-、-AttributedString究竟可以设置哪些属性"><a href="#二-、-AttributedString究竟可以设置哪些属性" class="headerlink" title="二 、 AttributedString究竟可以设置哪些属性"></a>二 、 AttributedString究竟可以设置哪些属性</h3><ul>
 <li><ol>
 <li>NSFontAttributeName <blockquote>
 <p>设置字体属性，默认值：字体：Helvetica(Neue) 字号：12<br>获取系统的字体：<code>[UIFont familyNames]</code></p>
@@ -504,7 +503,7 @@
 <li><p>NSDocumentTypeDocumentAttribute</p>
 <blockquote>
 <p>直接进行 html 的展示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">NSString * htmlString = @&quot;&lt;html&gt;&lt;body&gt; Some html string \n &lt;font size=\&quot;13\&quot; color=\&quot;red\&quot;&gt;This is some text!This is some text!This is some text!This is some text!This is some text!&lt;/font&gt; &lt;/body&gt;&lt;/html&gt;&quot;;</div><div class="line">attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@&#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType &#125; documentAttributes:nil error:nil];</div><div class="line">``` </div><div class="line">![22.png](http://upload-images.jianshu.io/upload_images/1429107-a83dcf9468fc8d26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line">###三、关于计算</div><div class="line">1 .在7.0以后官方计算的API</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">NSString * htmlString = @&quot;&lt;html&gt;&lt;body&gt; Some html string \n &lt;font size=\&quot;13\&quot; color=\&quot;red\&quot;&gt;This is some text!This is some text!This is some text!This is some text!This is some text!&lt;/font&gt; &lt;/body&gt;&lt;/html&gt;&quot;;</div><div class="line">attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@&#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType &#125; documentAttributes:nil error:nil];</div><div class="line">``` </div><div class="line">![22.png](http://upload-images.jianshu.io/upload_images/1429107-a83dcf9468fc8d26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line">### 三、关于计算</div><div class="line">1 .在7.0以后官方计算的API</div></pre></td></tr></table></figure>
 </blockquote>
 </li>
 <li><p>(CGRect)boundingRectWithSize:(CGSize)size options:(NSStringDrawingOptions)options attributes:(nullable NSDictionary<nsstring *,="" id=""> <em>)attributes context:(nullable NSStringDrawingContext </em>)context NS_AVAILABLE(10_11, 7_0);</nsstring></p>
@@ -774,7 +773,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、关于AttributedString"><span class="nav-number">1.</span> <span class="nav-text">一、关于AttributedString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-、-AttributedString究竟可以设置哪些属性"><span class="nav-number">2.</span> <span class="nav-text">二 、 AttributedString究竟可以设置哪些属性</span></a></li></ol></div>
             
           </div>
         </section>
