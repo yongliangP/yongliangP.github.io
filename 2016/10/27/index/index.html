@@ -1,0 +1,730 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="iOS 7 以协议的方式开放了自定义转场的 API，协议的好处是不再拘泥于具体的某个类，只要是遵守该协议的对象都能参与转场，使其可以非常灵活的使用。转场协议由5种协议组成，实际中只需要使用其中的两个或三个便能实现绝大部分的转场动画。下面就简单讲解一下使用的心得体会，最后的总结你会发现很简单。参考： Custom Transitions Using View Controllers
+       喵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 自定义转场动画的那些事">
+<meta property="og:url" content="http://yoursite.com/2016/10/27/index/index.html">
+<meta property="og:site_name" content="iceMaple的博客">
+<meta property="og:description" content="iOS 7 以协议的方式开放了自定义转场的 API，协议的好处是不再拘泥于具体的某个类，只要是遵守该协议的对象都能参与转场，使其可以非常灵活的使用。转场协议由5种协议组成，实际中只需要使用其中的两个或三个便能实现绝大部分的转场动画。下面就简单讲解一下使用的心得体会，最后的总结你会发现很简单。参考： Custom Transitions Using View Controllers
+       喵">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-b7a35d3019528722.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2016-10-27T04:35:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 自定义转场动画的那些事">
+<meta name="twitter:description" content="iOS 7 以协议的方式开放了自定义转场的 API，协议的好处是不再拘泥于具体的某个类，只要是遵守该协议的对象都能参与转场，使其可以非常灵活的使用。转场协议由5种协议组成，实际中只需要使用其中的两个或三个便能实现绝大部分的转场动画。下面就简单讲解一下使用的心得体会，最后的总结你会发现很简单。参考： Custom Transitions Using View Controllers
+       喵">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1429107-b7a35d3019528722.gif?imageMogr2/auto-orient/strip">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6326686191303263000,
+      author: '小白'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/27/index/"/>
+
+  <title> iOS 自定义转场动画的那些事 | iceMaple的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iceMaple的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS 自定义转场动画的那些事
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-27T12:35:10+08:00" content="2016-10-27">
+              2016-10-27
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/27/index/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/27/index/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>iOS 7 以协议的方式开放了自定义转场的 API，协议的好处是不再拘泥于具体的某个类，只要是遵守该协议的对象都能参与转场，使其可以非常灵活的使用。转场协议由5种协议组成，实际中只需要使用其中的两个或三个便能实现绝大部分的转场动画。下面就简单讲解一下使用的心得体会，最后的总结你会发现很简单。<br>参考： <a href="https://developer.apple.com/videos/play/wwdc2013/218/" target="_blank" rel="external"><a href="https://developer.apple.com/videos/play/wwdc2013/218/" target="_blank" rel="external">Custom Transitions Using View Controllers
+     </a></a>  <a href="https://onevcat.com/2013/10/vc-transition-in-ios7/" target="_blank" rel="external">喵神的博客</a><br><img src="http://upload-images.jianshu.io/upload_images/1429107-b7a35d3019528722.gif?imageMogr2/auto-orient/strip" alt="TransitionVC.gif"></p>
+<p>####1 概念</p>
+<ul>
+<li>动画控制器 (Animation Controllers) 遵守 <a href="https://developer.apple.com/reference/uikit/uiviewcontrolleranimatedtransitioning?language=objc" target="_blank" rel="external">UIViewControllerAnimatedTransitioning</a> 协议，并且负责实际执行动画。</li>
+<li>交互控制器 (Interaction Controllers) 通过遵守 <a href="https://developer.apple.com/reference/uikit/uiviewcontrollercontexttransitioning?language=objc" target="_blank" rel="external">UIViewControllerInteractiveTransitioning</a> 协议,来控制可交互式(手势或重力感应…)动画转场，大多都是使用它的一个子类<code>UIPercentDrivenInteractiveTransition</code>来更简单的实现手势交互动画。</li>
+<li>转场代理 (Transitioning Delegates) 根据不同的转场类型，提供需要的动画控制器和交互控制器。<br>有3种转场代理：<br><a href="https://developer.apple.com/reference/uikit/uinavigationcontrollerdelegate?language=objc" target="_blank" rel="external">UINavigationControllerDelegate</a> –自定义navigationController转场动画的时候<br><a href="https://developer.apple.com/reference/uikit/uitabbarcontrollerdelegate?language=objc" target="_blank" rel="external">UITabBarControllerDelegate</a> –自定义tabbarController转场动画的时候<br><a href="https://developer.apple.com/reference/uikit/uiviewcontrollertransitioningdelegate?language=objc" target="_blank" rel="external">UIViewControllerTransitioningDelegate</a>–自定义present/dismiss的时候</li>
+<li>转场上下文 (Transitioning Context) 提供转场中需要的数据，比如在转场过程中所参与的视图控制器和视图的相关属性。 转场上下文对象遵守 <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewControllerContextTransitioning_protocol/index.html#//apple_ref/occ/intfm/UIViewControllerContextTransitioning/cancelInteractiveTransition" target="_blank" rel="external">UIViewControllerContextTransitioning</a> 协议，并且这是由系统负责生成和提供的。<br>转场协调器(Transition Coordinators) 可以在运行转场动画时，并行的运行其他动画。转场协调器遵守<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewControllerTransitionCoordinator_Protocol/index.html#//apple_ref/doc/uid/TP40013295" target="_blank" rel="external">UIViewControllerTransitionCoordinator</a> 协议</li>
+</ul>
+<p>####2 自定义转场动画时你可能用到的那些方法<br>.<br> <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewControllerContextTransitioning_protocol/Reference/Reference.html" target="_blank" rel="external">UIViewControllerContextTransitioning</a></p>
+<blockquote>
+<p>这个接口用来提供切换的上下文给开发者使用，包含了从哪个VC到哪个VC等各类信息，一般不需要开发者自己实现。具体来说，iOS7的自定义切换目的之一就是切换相关代码解耦，在进行VC切换时，做切换效果实现的时候必须需要 切换前后VC的一些信息，提供一些方法，以供我们使用。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">-(UIView *)containerView; </div><div class="line">&gt;VC切换所发生的view容器，开发者应该将切出的view移除，将切入的view加入到该view容器中。</div><div class="line">-(UIViewController *)viewControllerForKey:(NSString *)key; </div><div class="line">&gt;提供一个key，返回对应的VC。现在的SDK中key的选择只有UITransitionContextFromViewControllerKey和UITransitionContextToViewControllerKey两种，分别表示将要切出和切入的VC。</div><div class="line">-(CGRect)initialFrameForViewController:(UIViewController *)vc; </div><div class="line">&gt;某个VC的初始位置，可以用来做动画的计算。</div><div class="line">-(CGRect)finalFrameForViewController:(UIViewController *)vc;</div><div class="line">&gt; 与上面的方法对应，得到切换结束时某个VC应在的frame。</div><div class="line">-(void)completeTransition:(BOOL)didComplete; </div><div class="line">&gt;向这个context报告切换已经完成。</div></pre></td></tr></table></figure>
+<p> <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewControllerAnimatedTransitioning_Protocol/Reference/Reference.html" target="_blank" rel="external">UIViewControllerAnimatedTransitioning</a></p>
+<blockquote>
+<p>这个接口负责切换的具体内容，即“切换中应该发生什么”。开发者在做自定义切换效果时大部分代码会是用来实现这个接口。它只有两个方法需要我们实现：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(NSTimeInterval)transitionDuration:(id &lt; UIViewControllerContextTransitioning &gt;)transitionContext; </div><div class="line">&gt;系统给出一个切换上下文，我们根据上下文环境返回这个切换所需要的花费时间（一般就返回动画的时间就好了，系统会用这个时间来在百分比驱动的切换中进行帧的计算）。</div><div class="line">-(void)animateTransition:(id &lt; UIViewControllerContextTransitioning &gt;)transitionContext; </div><div class="line">&gt;在进行切换的时候将调用该方法，我们对于切换时的UIView的设置和动画都在这个方法中完成。</div></pre></td></tr></table></figure>
+<p><a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UIViewControllerTransitioningDelegate_protocol/Reference/Reference.html" target="_blank" rel="external">UIViewControllerTransitioningDelegate</a></p>
+<blockquote>
+<p>这个接口的作用比较简单单一，在需要VC切换的时候系统会像实现了这个接口的对象询问是否需要使用自定义的切换效果。这个接口共有四个类似的方法：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-(id&lt; UIViewControllerAnimatedTransitioning &gt;)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source;</div><div class="line">&gt;在 presented 动画中会被调用</div><div class="line">-(id&lt; UIViewControllerAnimatedTransitioning &gt;)animationControllerForDismissedController:(UIViewController *)dismissed;</div><div class="line">&gt;在 dismiss 动画中会被调用</div><div class="line">-(id&lt; UIViewControllerInteractiveTransitioning &gt;)interactionControllerForPresentation:(id &lt; UIViewControllerAnimatedTransitioning &gt;)animator;</div><div class="line">-(id&lt; UIViewControllerInteractiveTransitioning &gt;)interactionControllerForDismissal:(id &lt; UIViewControllerAnimatedTransitioning &gt;)animator;</div></pre></td></tr></table></figure>
+<p><a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UIPercentDrivenInteractiveTransition_class/Reference/Reference.html" target="_blank" rel="external">UIPercentDrivenInteractiveTransition</a><br>这是一个实现了UIViewControllerInteractiveTransitioning接口的类，为我们预先实现和提供了一系列便利的方法，可以用一个百分比来控制交互式切换的过程。一般来说我们更多地会使用某些手势来完成交互式的转移，这样使用这个类（一般是其子类,下面会讲到）的话就会非常方便。我们在手势识别中只需要告诉这个类的实例当前的状态百分比如何，系统便根据这个百分比和我们之前设定的迁移方式为我们计算当前应该的UI渲染，十分方便。具体的几个重要方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-(void)updateInteractiveTransition:(CGFloat)percentComplete</div><div class="line">&gt; 更新百分比，一般通过手势识别的长度之类的来计算一个值，然后进行更新。之后的例子里会看到详细的用法</div><div class="line">-(void)cancelInteractiveTransition </div><div class="line">&gt;报告交互取消，返回切换前的状态</div><div class="line">–(void)finishInteractiveTransition </div><div class="line">&gt;报告交互完成，更新到切换后的状态</div></pre></td></tr></table></figure>
+<p><a href="https://developer.apple.com/reference/uikit/uinavigationcontrollerdelegate?language=objc" target="_blank" rel="external">UINavigationControllerDelegate</a> </p>
+<blockquote>
+<p>自定义navigationController转场动画的时候</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (nullable id &lt;UIViewControllerInteractiveTransitioning&gt;)navigationController:(UINavigationController *)navigationController</div><div class="line">                          interactionControllerForAnimationController:(id &lt;UIViewControllerAnimatedTransitioning&gt;) animationController NS_AVAILABLE_IOS(7_0);</div><div class="line">&gt;视图控制器转换返回一个非交互式动画对象使用</div><div class="line">- (nullable id &lt;UIViewControllerAnimatedTransitioning&gt;)navigationController:(UINavigationController *)navigationController</div><div class="line">                                   animationControllerForOperation:(UINavigationControllerOperation)operation</div><div class="line">                                                fromViewController:(UIViewController *)fromVC</div><div class="line">                                                  toViewController:(UIViewController *)toVC  NS_AVAILABLE_IOS(7_0);</div><div class="line">&gt;视图控制器转换返回一个互动的动画对象使用。</div></pre></td></tr></table></figure>
+<p>####3 实战</p>
+<ul>
+<li>Present 动画 <blockquote>
+<p>就如上面所说转场动画遵循<code>UIViewControllerAnimatedTransitioning</code>协议拿到需要做动画的视图，首先建一个动画类遵循这个协议。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@interface BouncePresentAnimation : NSObject &lt;UIViewControllerAnimatedTransitioning&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p>遵循这个协议后实现里面的两个方法<br>方法1：用来控制转场动画的时间<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (NSTimeInterval)transitionDuration:(id &lt;UIViewControllerContextTransitioning&gt;)transitionContext</div><div class="line">&#123;</div><div class="line">    return 0.8f;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>方法2：这里用来控制视图切换做动画，因为有 present 和 dismiss 所以在这里区分两个动画（需要一个type，后面会提到）</p>
+<ul>
+<li>(void)animateTransition:(id <uiviewcontrollercontexttransitioning>)transitionContext<br>{<pre><code>  switch (self.type)
+ {
+case TransitionTypePresent:
+    [self presentAnimation:transitionContext];
+    break;
+case TransitionTypeDissmiss:
+    [self dismissAnimation:transitionContext];
+    break;
+default:
+    break;
+ }
+</code></pre>}<br>实现：具体也可以看 <a href="https://onevcat.com/2013/10/vc-transition-in-ios7/" target="_blank" rel="external">喵神的博客</a> 此处为借鉴，旨在理解。</uiviewcontrollercontexttransitioning></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">//实现present动画逻辑代码</div><div class="line">\\- (void)presentAnimation:(id&lt;UIViewControllerContextTransitioning&gt;)transitionContext</div><div class="line">&#123;</div><div class="line">    // 1. Get controllers from transition context</div><div class="line">    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];</div><div class="line"></div><div class="line">    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];</div><div class="line"></div><div class="line">    //fromVC.view.hidden = YES;</div><div class="line"></div><div class="line">    UIView * screenSnapShotView = [fromVC.view snapshotViewAfterScreenUpdates:YES];</div><div class="line"></div><div class="line">    // 2. Set init frame for toVC</div><div class="line">    CGRect screenBounds = [[UIScreen mainScreen] bounds];</div><div class="line">    CGRect finalFrame = [transitionContext finalFrameForViewController:toVC];</div><div class="line">    toVC.view.frame = CGRectOffset(finalFrame, 0, screenBounds.size.height);</div><div class="line"></div><div class="line">    // 3. Add toVC&apos;s view to containerView</div><div class="line">    UIView *containerView = [transitionContext containerView];</div><div class="line"></div><div class="line">    [containerView insertSubview:screenSnapShotView aboveSubview:fromVC.view];</div><div class="line"></div><div class="line">    [containerView addSubview:toVC.view];</div><div class="line"></div><div class="line">    // 4. Do animate now</div><div class="line">    NSTimeInterval duration = [self transitionDuration:transitionContext];</div><div class="line"></div><div class="line">    [UIView animateWithDuration:duration</div><div class="line">                          delay:0.0</div><div class="line">         usingSpringWithDamping:0.6</div><div class="line">          initialSpringVelocity:0.0</div><div class="line">                        options:UIViewAnimationOptionTransitionFlipFromBottom</div><div class="line">                     animations:^&#123;</div><div class="line">                         toVC.view.frame = finalFrame;</div><div class="line">                     &#125; completion:^(BOOL finished) &#123;</div><div class="line">                         // 5. Tell context that we completed.</div><div class="line">                         [transitionContext completeTransition:YES];</div><div class="line">                     &#125;];</div><div class="line"></div><div class="line">&#125;</div><div class="line">//实现dismiss动画逻辑代码</div><div class="line">- (void)dismissAnimation:(id&lt;UIViewControllerContextTransitioning&gt;)transitionContext</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    // 1. Get controllers from transition context</div><div class="line">    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];</div><div class="line">    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];</div><div class="line">    </div><div class="line">    // 2. Set init frame for fromVC</div><div class="line">    CGRect screenBounds = [[UIScreen mainScreen] bounds];</div><div class="line">    CGRect initFrame = [transitionContext initialFrameForViewController:fromVC];</div><div class="line">    CGRect finalFrame = CGRectOffset(initFrame, 0, screenBounds.size.height);</div><div class="line">    </div><div class="line">    // 3. Add target view to the container, and move it to back.</div><div class="line">    UIView *containerView = [transitionContext containerView];</div><div class="line">    [containerView addSubview:toVC.view];</div><div class="line">    [containerView sendSubviewToBack:toVC.view];</div><div class="line">    </div><div class="line">    // 4. Do animate now</div><div class="line">    NSTimeInterval duration = [self transitionDuration:transitionContext];</div><div class="line">    [UIView animateWithDuration:duration animations:^&#123;</div><div class="line">        fromVC.view.frame = finalFrame;</div><div class="line">    &#125; completion:^(BOOL finished) &#123;</div><div class="line">        [transitionContext completeTransition:![transitionContext transitionWasCancelled]];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面我们完成了动画部分，接下来就是要告知系统，让其去使用我们的动画。就如上面提到的需要实现<code>UIViewControllerTransitioningDelegate</code>，在这里你会知道present和dismiss，所以在这里你可以传个<code>type</code>告知你需要的是那种动画，从而让你的动画类去实现相应动画。<br>present 时会触发的代理，这个时候告诉它我们需要的present动画<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (nullable id &lt;UIViewControllerAnimatedTransitioning&gt;)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source</div><div class="line">&#123;</div><div class="line">    return [BouncePresentAnimation transitionWithTransitionType:TransitionTypePresent];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>dismiss 时会触发的代理，这个时候告诉它我们需要的dismiss动画<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (nullable id &lt;UIViewControllerAnimatedTransitioning&gt;)animationControllerForDismissedController:(UIViewController *)dismissed</div><div class="line">&#123;</div><div class="line">    return [BouncePresentAnimation transitionWithTransitionType:TransitionTypeDissmiss];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然前提是你遵从了它的代理，你可以让前一个控制器作为后者的代理去实现这些方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ModalViewController *mvc =  [[ModalViewController alloc] init];</div><div class="line"> mvc.transitioningDelegate = self;</div><div class="line">mvc.delegate = self;</div><div class="line">[self presentViewController:mvc animated:YES completion:nil];</div></pre></td></tr></table></figure></p>
+<ul>
+<li>pop 动画<blockquote>
+<p>和present一样，如果想要自定义动画，需要遵循<code>UIViewControllerAnimatedTransitioning</code>协议</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@interface PushAnimation : NSObject&lt;UIViewControllerAnimatedTransitioning&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p>同样的实现协议里的两个方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">- (NSTimeInterval)transitionDuration:(nullable id &lt;UIViewControllerContextTransitioning&gt;)transitionContext</div><div class="line">&#123;</div><div class="line">    return 1.0f;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)animateTransition:(id &lt;UIViewControllerContextTransitioning&gt;)transitionContext</div><div class="line">&#123;</div><div class="line">    self.transitionContext = transitionContext;</div><div class="line">    </div><div class="line">    switch (self.type)</div><div class="line">    &#123;</div><div class="line">        case TransitionAnimTypePop:</div><div class="line">            [self transitionAnimTypePopWithTransitionContext:transitionContext];</div><div class="line">            break;</div><div class="line">        case TransitionAnimTypePush:</div><div class="line">             [self transitionAnimTypePushWithTransitionContext:transitionContext];</div><div class="line">            break;</div><div class="line">        default:</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同样的,你需要遵守 <code>UINavigationControllerDelegate</code> ，并在它的代理方法里面实现你要的动画<br>添加代理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-(void)viewDidAppear:(BOOL)animated</div><div class="line">&#123;</div><div class="line">    [super viewDidAppear:animated];</div><div class="line">    self.navigationController.delegate = self;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现动画<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">- (id&lt;UIViewControllerAnimatedTransitioning&gt;)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC</div><div class="line">&#123;</div><div class="line">    if (operation == UINavigationControllerOperationPush)</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        return [PushAnimation transitionWithTransitionType:</div><div class="line">                TransitionAnimTypePush];</div><div class="line">    &#125;</div><div class="line">    else if (operation == UINavigationControllerOperationPop)</div><div class="line">    &#123;</div><div class="line">        return [PushAnimation transitionWithTransitionType:</div><div class="line">                        TransitionAnimTypePop];</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    //返回nil则使用默认的动画效果</div><div class="line">    return nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>实现手势动画<blockquote>
+<p>如上所述，手势动画需要 <code>UIPercentDrivenInteractiveTransition</code>实现，提供了一系列便利的方法，可以用一个百分比来控制交互式切换的过程。我们在手势识别中只需要告诉这个类的实例当前的状态百分比如何，系统便根据这个百分比和我们之前设定的迁移方式为我们计算当前应该的UI渲染，使动画过渡的更加自然。<br>首先我们新建一个手势处理类<code>SwipeUpInteractiveTransition</code>继承于<code>UIPercentDrivenInteractiveTransition</code>这样我们可以获取相应的父类方法。<br>首先给所在的控制器的view添加手势</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self.transitionController wireToViewController:mvc];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p>主要运用的手势控制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">- (void)handleGesture:(UIPanGestureRecognizer *)gestureRecognizer &#123;</div><div class="line">    CGPoint translation = [gestureRecognizer translationInView:gestureRecognizer.view.superview];</div><div class="line">    switch (gestureRecognizer.state)</div><div class="line">    &#123;</div><div class="line">        case UIGestureRecognizerStateBegan:</div><div class="line">            // 1. Mark the interacting flag. Used when supplying it in delegate.</div><div class="line">            self.interacting = YES;</div><div class="line">            [self.presentingVC dismissViewControllerAnimated:YES completion:nil];</div><div class="line">            break;</div><div class="line">        case UIGestureRecognizerStateChanged:</div><div class="line">        &#123;</div><div class="line">            // 2. Calculate the percentage of guesture</div><div class="line">            CGFloat fraction = (translation.y / KWindowHeight);</div><div class="line">            //Limit it between 0 and 1</div><div class="line">            fraction = fminf(fmaxf(fraction, 0.0), 1.0);</div><div class="line">            NSLog(@&quot;fraction==%f&quot;,fraction);</div><div class="line">            self.shouldComplete = (fraction &gt; 0.5);</div><div class="line">            [self updateInteractiveTransition:fraction];</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">        case UIGestureRecognizerStateEnded:</div><div class="line">        case UIGestureRecognizerStateCancelled:</div><div class="line">        &#123;</div><div class="line">            // 3. Gesture over. Check if the transition should happen or not</div><div class="line">            self.interacting = NO;</div><div class="line">            if (!self.shouldComplete || gestureRecognizer.state == UIGestureRecognizerStateCancelled)</div><div class="line">            &#123;</div><div class="line">                [self cancelInteractiveTransition];</div><div class="line">            &#125;</div><div class="line">            else</div><div class="line">            &#123;</div><div class="line">                [self finishInteractiveTransition];</div><div class="line">            &#125;</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">        default:</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>总结<br><strong>非交互动画</strong><br>1.创建动画类遵从<code>UIViewControllerAnimatedTransitioning</code> 实现里面的接口<br>2.让相应的控制器做代理<br>3.present 实现 <code>UIViewControllerTransitioningDelegate</code>  接口，push 实现  <code>UINavigationControllerDelegate</code>  接口<br><strong>交互动画</strong><br>1.创建动画类继承于 <code>UIPercentDrivenInteractiveTransition</code> ，然后在里面实现相应的动画即可。<br>2.在跳转页面时告诉动画类你需要控制的页面</li>
+</ul>
+<p><strong>注：</strong>在push动画中的layer动画可以任意替换为其他转场动画，只用把动画加到 <code>containerView.layer</code> 上即可。<a href="http://www.jianshu.com/p/a098f6e3617f" target="_blank" rel="external"><code>CATransition</code> 动画传送门</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">containerView.layer addAnimation:transition forKey:nil`</div></pre></td></tr></table></figure></p>
+<p>照例放Demo，仅供参考<br>Demo地址：<br><a href="https://github.com/yongliangP/iOS-TransitionVC" target="_blank" rel="external">https://github.com/yongliangP/iOS-TransitionVC</a><br>如果你觉得对你有帮助请点喜欢哦，也可以关注我，每周至少一篇技术。<br>或者关注 <a href="http://www.jianshu.com/collection/faae4d82e342" target="_blank" rel="external">我的专题</a> 每周至少5篇更新，多谢支持哈。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/27/iOS中关于AttributedString的那些事儿/" rel="next" title="iOS中关于AttributedString的那些事儿">
+                <i class="fa fa-chevron-left"></i> iOS中关于AttributedString的那些事儿
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/27/index/"
+           data-title="iOS 自定义转场动画的那些事" data-url="http://yoursite.com/2016/10/27/index/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="iceMaple" />
+          <p class="site-author-name" itemprop="name">iceMaple</p>
+          <p class="site-description motion-element" itemprop="description">iOS开发工程师</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yongliangP" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/b595ae45d705/latest_articles" target="_blank" title="JianShu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  JianShu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/b595ae45d705/latest_articles" title="iceMaple简书" target="_blank">iceMaple简书</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iceMaple</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"iceMaplee"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

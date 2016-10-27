@@ -1,0 +1,936 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="###一、关于AttributedString在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS中关于AttributedString的那些事儿">
+<meta property="og:url" content="http://yoursite.com/2016/10/27/iOS中关于AttributedString的那些事儿/index.html">
+<meta property="og:site_name" content="iceMaple的博客">
+<meta property="og:description" content="###一、关于AttributedString在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAt">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-1c27719418986338.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-8a1fc3c3dffbb52f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-520dc797cf91673c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-34a1b8aab9dfc387.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-f9b8b6097ade2a8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-5326a9d80d018122.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-d31973548dda299c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-7dddc8270ba35247.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-67e11eab410915f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-a6121b85c19550e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-70d3ab413f0e8acf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-e16b61ecb4284641.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-6db98dec85a0d029.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-f4a82da7ab176c2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-d94001df1c86585f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-f7f99176bf17183b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-21b3ee6116689961.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-2d3a9c06a890b7ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-c87b580a890b282b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-4fdb453fd6e87481.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-4c13bfd22cbd4e6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-10-27T03:57:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS中关于AttributedString的那些事儿">
+<meta name="twitter:description" content="###一、关于AttributedString在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAt">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1429107-1c27719418986338.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6326686191303263000,
+      author: '小白'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/27/iOS中关于AttributedString的那些事儿/"/>
+
+  <title> iOS中关于AttributedString的那些事儿 | iceMaple的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iceMaple的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS中关于AttributedString的那些事儿
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-27T11:54:06+08:00" content="2016-10-27">
+              2016-10-27
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/27/iOS中关于AttributedString的那些事儿/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/27/iOS中关于AttributedString的那些事儿/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>###一、关于AttributedString<br>在iOS开发过程中系统简单的封装工具已经不够我们使用，为了更好的开发，苹果公司为开发者提供了一套丰富的API供开发者们使用。其中开发过程中使用最多的就是AttributedString了吧，AttributedString与NSString类似，在iOS中AttributedString也分为NSAttributedString和NSMutableAttributedString，不同的是，AttributedString对象多了一个Attribute的概念，一个AttributedString的对象包含很多的属性，每一个属性都有其对应的字符区域，使用NSRange来进行描述。下面简单讲解一下AttributedString的属性及用法。<br>官方学习链接<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/AttributedStrings/AttributedStrings.html" target="_blank" rel="external">Attributed String Programming Guide</a></p>
+<ul>
+<li><p>1.方式一：</p>
+<blockquote>
+<p>首先初始化一个NSMutableAttributedString，然后向里面添加文字样式，最后将它赋给控件的AttributedText，该方法适合于文本较少而又需要分段精细控制的情况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是第一种方式，哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈&quot;];</div><div class="line">[attrStr addAttribute: NSFontAttributeName value: [UIFont fontWithName: @&quot;Papyrus&quot; size: 15] range: NSMakeRange(0, attrStr.length)];</div><div class="line">NSMutableParagraphStyle * style = [[NSMutableParagraphStyle alloc] init];</div><div class="line">style.lineSpacing = 5.0;</div><div class="line">[attrStr addAttribute: NSParagraphStyleAttributeName value: style range: NSMakeRange(0, attrStr.length)];</div><div class="line">self.firstLabel.attributedText = attrStr;</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>2.方式二：</p>
+<blockquote>
+<p>首先创建属性字典，初始化各种属性，然后和需要控制的文本一起创建并赋值给控件的AttributedText，该方法适合于需要控制的文本较多整体控制的情况，通常是从文件中读取的大段文本控制。    </p>
+</blockquote>
+</li>
+</ul>
+<p>//第二种方式<br>NSDictionary <em> dict = @{NSFontAttributeName:[UIFont fontWithName: @”Papyrus” size: 15], [UIFont fontWithName: @”Papyrus” size: 15]:style  };<br>NSMutableAttributedString </em> attrStr2 = [[NSMutableAttributedString alloc] initWithString:@”我是第二种方式，哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈” attributes:dict];<br>self.secondLabel.attributedText = attrStr2;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-1c27719418986338.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>###二 、 AttributedString究竟可以设置哪些属性</p>
+<ul>
+<li><ol>
+<li>NSFontAttributeName <blockquote>
+<p>设置字体属性，默认值：字体：Helvetica(Neue) 字号：12<br>获取系统的字体：<code>[UIFont familyNames]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSFontAttributeName 字体：Papyrus 字号：15&quot;];</div><div class="line">[attrStr addAttribute: NSFontAttributeName value: [UIFont fontWithName: @&quot;Papyrus&quot; size: 15] range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-8a1fc3c3dffbb52f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.1.png"> </p>
+<ul>
+<li>NSParagraphStyleAttributeName(后面具体讲解)<blockquote>
+<p>该属性所对应的值是一个 NSParagraphStyle/NSMutableParagraphStyle 对象。该属性在一段文本上应用多个属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">NSMutableParagraphStyle * style = [[NSMutableParagraphStyle alloc] init];</div><div class="line">style.lineSpacing = 10.0;</div><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSParagraphStyleAttributeName \\\\\\\\\\\\\\\\n行间距 10&quot;];</div><div class="line">[attrStr addAttribute: NSParagraphStyleAttributeName value: style range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-520dc797cf91673c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.2.png"></p>
+<ul>
+<li>NSForegroundColorAttributeName<blockquote>
+<p>设置字体颜色，取值为 UIColor对象，默认值为黑色   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSForegroundColorAttributeName 颜色orangeColor&quot;];</div><div class="line">[attrStr addAttribute: NSForegroundColorAttributeName value: [UIColor orangeColor] range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-34a1b8aab9dfc387.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.3.png"></p>
+<ul>
+<li>NSBackgroundColorAttributeName<blockquote>
+<p>设置字体所在区域背景颜色，取值为 UIColor对象，默认值为nil, 透明色</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSBackgroundColorAttributeName 背景颜色red&quot;];</div><div class="line">[attrStr addAttribute: NSBackgroundColorAttributeName value: [UIColor redColor] range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-f9b8b6097ade2a8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.4.png"></p>
+<ul>
+<li>NSLigatureAttributeName<blockquote>
+<p>设置连体属性，取值为NSNumber 对象(整数)，0 表示没有连体字符，1 表示使用默认的连体字符。2 表示使用所有连体符号。默认值为 1（注意，iOS 不支持值为 2）如下图’f’ ‘l’的连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSLigatureAttributeName &apos;fl&apos; 连体属性 0&quot;];</div><div class="line">[attrStr addAttribute: NSFontAttributeName value: [UIFont fontWithName: @&quot;PingFang SC&quot; size: 15] range: NSMakeRange(0, attrStr.length)];</div><div class="line">[attrStr addAttribute: NSLigatureAttributeName value: @(0) range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-5326a9d80d018122.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="
+![2.5.2.png](http://upload-images.jianshu.io/upload_images/1429107-c9ad3521232a48d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)"></p>
+<ul>
+<li>NSKernAttributeName<blockquote>
+<p>设定字符间距，取值为 NSNumber 对象（整数），正值间距加宽，负值间距变窄。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSKernAttributeName  字符间距 2&quot;];</div><div class="line">[attrStr addAttribute: NSKernAttributeName value: @(2) range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-d31973548dda299c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.6.png"></p>
+<ul>
+<li>NSStrikethroughStyleAttributeName<blockquote>
+<p>设置删除线，取值为 NSNumber 对象（整数）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSStrikethroughStyleAttributeName  删除线 1&quot;];</div><div class="line">[attrStr addAttribute: NSStrikethroughStyleAttributeName value: @(1) range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-7dddc8270ba35247.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.7.png"></p>
+<ul>
+<li>NSUnderlineStyleAttributeName<blockquote>
+<p>设置下划线，取值为 NSNumber 对象（整数），枚举常量 NSUnderlineStyle中的值。默认值是NSUnderlineStyleNone。<br><img src="http://upload-images.jianshu.io/upload_images/1429107-67e11eab410915f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.8.png"></p>
+</blockquote>
+</li>
+<li>NSStrokeColorAttributeName<blockquote>
+<p>设置填充颜色。取值为 UIColor 对象,需要和NSStrokeWidthAttributeName设置描边宽度，这样就能使文字产生镂空效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSStrokeColorAttributeName 配合NSStrokeWidthAttributeName使用&quot;];</div><div class="line">[attrStr addAttribute: NSStrokeColorAttributeName value: [UIColor redColor] range: NSMakeRange(0, attrStr.length)];</div><div class="line">[attrStr addAttribute: NSStrokeWidthAttributeName value: @(2) range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-a6121b85c19550e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.9.png"></p>
+<ul>
+<li>NSStrokeWidthAttributeName<blockquote>
+<p>设置笔画宽度，取值为 NSNumber 对象（整数），负值填充效果，正值中空效果。与NSStrokeColorAttributeName配合使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSStrokeWidthAttributeName 配合NSStrokeColorAttributeName使用&quot;];</div><div class="line">[attrStr addAttribute: NSStrokeWidthAttributeName value: @(-2) range: NSMakeRange(0, attrStr.length)];</div><div class="line">[attrStr addAttribute: NSStrokeColorAttributeName value: [UIColor blueColor] range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-70d3ab413f0e8acf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.10.png"></p>
+<ul>
+<li>NSShadowAttributeName<blockquote>
+<p>设置阴影属性，取值为 NSShadow 对象。默认为 nil。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSShadowAttributeName 竖直方向偏移 15&quot;];</div><div class="line">NSShadow * shadow = [[NSShadow alloc] init];</div><div class="line">shadow.shadowColor = [UIColor grayColor];</div><div class="line">shadow.shadowOffset = CGSizeMake(0, 15);</div><div class="line">[attrStr addAttribute: NSShadowAttributeName value:shadow range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-e16b61ecb4284641.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.11.png"></p>
+<ul>
+<li>NSTextEffectAttributeName<blockquote>
+<p>设置文本特殊效果，取值为 NSString 对象，目前只有图版印刷效果可用NSTextEffectLetterpressStyle。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSTextEffectAttributeName 模式NSTextEffectLetterpressStyle&quot;];</div><div class="line">[attrStr addAttribute: NSTextEffectAttributeName value:NSTextEffectLetterpressStyle range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-6db98dec85a0d029.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.12.png"></p>
+<ul>
+<li>NSAttachmentAttributeName<blockquote>
+<p>设置文本附件,取值为NSTextAttachment对象,常用于文字图片混排</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">NSMutableAttributedString * attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSAttachmentAttributeName &quot;];</div><div class="line">NSTextAttachment * textAtt = [[NSTextAttachment alloc] init];</div><div class="line">textAtt.image = [UIImage imageNamed:@&quot;tag_d&quot;];</div><div class="line">textAtt.bounds = CGRectMake(0, 0, 44, 44);</div><div class="line">NSAttributedString *attrStr2 = [NSAttributedString attributedStringWithAttachment: textAtt];</div><div class="line">[attrStr insertAttributedString: attrStr2 atIndex: 6];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-f4a82da7ab176c2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.13.png"></p>
+<ul>
+<li>NSLinkAttributeName<blockquote>
+<p>设置链接属性，对象是NSURL点击后调用浏览器打开指定URL地址<br>推荐一款非常好用的轮子 <strong><a href="https://github.com/TTTAttributedLabel/TTTAttributedLabel" target="_blank" rel="external">TTTAttributedLabel</a></strong><br>UITextView *textView = [[UITextView alloc] init];<br>textView.scrollEnabled = NO;<br>textView.editable = NO;<br>textView.frame =cell.bounds;<br>textView.textContainer.lineFragmentPadding = 0;<br>textView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);<br>textView.delegate = self;<br>attrStr = [[NSMutableAttributedString alloc] initWithString:@”我是NSLinkAttributeName 测试 百度”];<br>[attrStr addAttribute: NSLinkAttributeName value:[NSURL URLWithString: @”<a href="http://www.baidu.com" target="_blank" rel="external">http://www.baidu.com</a>“] range: NSMakeRange(0, attrStr.length)];<br>textView.attributedText = attrStr;</p>
+</blockquote>
+</li>
+<li>NSBaselineOffsetAttributeName<blockquote>
+<p>设置基线偏移值，取值为 NSNumber （float）,正值上偏，负值下偏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSBaselineOffsetAttributeName 偏移5&quot;];</div><div class="line">[attrStr addAttribute: NSBaselineOffsetAttributeName value: @(5) range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-d94001df1c86585f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.15.png"></p>
+<ul>
+<li>NSUnderlineColorAttributeName<blockquote>
+<p>设置下划线颜色，取值为 UIColor 对象，默认值为黑色</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSUnderlineColorAttributeName &quot;];</div><div class="line">[attrStr addAttribute: NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range: NSMakeRange(0, attrStr.length)];</div><div class="line">[attrStr addAttribute: NSUnderlineColorAttributeName value:[UIColor yellowColor] range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-f7f99176bf17183b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.16.png"></p>
+<ul>
+<li>NSStrikethroughColorAttributeName<blockquote>
+<p>设置删除线颜色，取值为 UIColor 对象，默认值为黑色</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSStrikethroughColorAttributeName &quot;];</div><div class="line">[attrStr addAttribute: NSStrikethroughStyleAttributeName value:@(1) range: NSMakeRange(0, attrStr.length)];</div><div class="line">[attrStr addAttribute: NSStrikethroughColorAttributeName value:[UIColor brownColor] range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-21b3ee6116689961.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.17.png"></p>
+<ul>
+<li>NSObliquenessAttributeName<blockquote>
+<p>设置字形倾斜度，取值为 NSNumber （float）,正值右倾，负值左倾</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSStrikethroughColorAttributeName 右倾斜&quot;];</div><div class="line">[attrStr addAttribute: NSObliquenessAttributeName value:@(1) range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-2d3a9c06a890b7ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.18.png"></p>
+<ul>
+<li>NSExpansionAttributeName<blockquote>
+<p>设置文本横向拉伸属性，取值为 NSNumber （float）,正值横向拉伸文本，负值横向压缩</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSExpansionAttributeName 横向压&quot;];</div><div class="line">[attrStr addAttribute: NSFontAttributeName value: [UIFont fontWithName: @&quot;Papyrus&quot; size: 12] range: NSMakeRange(0, attrStr.length)];</div><div class="line">[attrStr addAttribute: NSExpansionAttributeName value:@(1) range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-c87b580a890b282b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.19.png"></p>
+<ul>
+<li>NSWritingDirectionAttributeName<blockquote>
+<p>设置文字书写方向，取值为以下组合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@[@(NSWritingDirectionLeftToRight|NSWritingDirectionEmbedding)];  </div><div class="line">@[@(NSWritingDirectionRightToLeft|NSWritingDirectionEmbedding)];   </div><div class="line">@[@(NSWritingDirectionLeftToRight|NSWritingDirectionOverride)];</div><div class="line">@[@(NSWritingDirectionRightToLeft|NSWritingDirectionOverride)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSWritingDirectionAttributeName 方式NSWritingDirectionLeftToRight&amp;Embedding&quot;];</div><div class="line">[attrStr addAttribute: NSWritingDirectionAttributeName value:@[@(NSWritingDirectionLeftToRight | NSWritingDirectionEmbedding)] range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-4fdb453fd6e87481.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.20.png"></p>
+<ul>
+<li>NSVerticalGlyphFormAttributeName<blockquote>
+<p>文本方向，取值为 NSNumber 对象(整数)。0 表示横排文本。1 表示竖排文本。在 iOS 中，总是使用横排文本，0 以外的值都未定义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:@&quot;我是NSVerticalGlyphFormAttributeName &quot;];</div><div class="line">[attrStr addAttribute: NSVerticalGlyphFormAttributeName value:@(0) range: NSMakeRange(0, attrStr.length)];</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1429107-4c13bfd22cbd4e6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.21.png"></p>
+<ul>
+<li><p>NSDocumentTypeDocumentAttribute</p>
+<blockquote>
+<p>直接进行 html 的展示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">NSString * htmlString = @&quot;&lt;html&gt;&lt;body&gt; Some html string \n &lt;font size=\&quot;13\&quot; color=\&quot;red\&quot;&gt;This is some text!This is some text!This is some text!This is some text!This is some text!&lt;/font&gt; &lt;/body&gt;&lt;/html&gt;&quot;;</div><div class="line">attrStr = [[NSMutableAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@&#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType &#125; documentAttributes:nil error:nil];</div><div class="line">``` </div><div class="line">![22.png](http://upload-images.jianshu.io/upload_images/1429107-a83dcf9468fc8d26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line">###三、关于计算</div><div class="line">1 .在7.0以后官方计算的API</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>(CGRect)boundingRectWithSize:(CGSize)size options:(NSStringDrawingOptions)options attributes:(nullable NSDictionary<nsstring *,="" id=""> <em>)attributes context:(nullable NSStringDrawingContext </em>)context NS_AVAILABLE(10_11, 7_0);</nsstring></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&gt;参数</div><div class="line">size：</div><div class="line">宽高限制，用于计算文本绘制时占据的矩形块。</div><div class="line">options：</div><div class="line">文本绘制时的附加选项。可能取值请参考“NSStringDrawingOptions”。</div><div class="line">attributes：</div><div class="line">文本绘制时用到的AttributedString的属性，就是文中提到的20几种。</div><div class="line">context：</div><div class="line">context上下文。包括一些信息，例如如何调整字间距以及缩放。最终，该对象包含的信息将用于文本绘制。该参数一般为 nil 。</div><div class="line">返回值：</div><div class="line">一个矩形，大小等于文本绘制完将占据的宽和高。</div><div class="line">具体计算方式,example</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>-(CGFloat)getSpaceLabelHeight:(NSString<em>)str withFont:(UIFont</em>)font withWidth:(CGFloat)width<br>{<br>NSMutableParagraphStyle <em>paraStyle = [[NSMutableParagraphStyle alloc] init];<br>paraStyle.alignment = NSTextAlignmentLeft;<br>paraStyle.lineSpacing = 4;<br>NSDictionary </em>dic = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paraStyle<br>};</p>
+<p>CGSize size = [str boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:dic context:nil].size;<br>return size.height;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2 .计算真实的大小，sizeThatFits</div></pre></td></tr></table></figure></p>
+<ul>
+<li>(CGSize)sizeThatFits:(CGSize)size;     // return ‘best’ size to fit given size. does not actually resize view. Default is return existing view size</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">3 . 自适应，sizeToFit</div></pre></td></tr></table></figure>
+<ul>
+<li>(void)sizeToFit;                       // calls sizeThatFits: with current view bounds and changes bounds size.<br>```<blockquote>
+<p>视具体情况而定，灵活应用上面三种方式计算即可，满足绝大多数需求。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>附</strong>：NSParagraphStyle的属性参考</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解读 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lineSpacing</td>
+<td>CGFloat类型，行距</td>
+</tr>
+<tr>
+<td>paragraphSpacing</td>
+<td>CGFloat类型，段距</td>
+</tr>
+<tr>
+<td>alignment</td>
+<td>NSTextAlignment，对齐方式</td>
+</tr>
+<tr>
+<td>firstLineHeadIndent</td>
+<td>CGFloat类型，首行缩进</td>
+</tr>
+<tr>
+<td>headIndent</td>
+<td>CGFloat类型，缩进</td>
+</tr>
+<tr>
+<td>tailIndent</td>
+<td>CGFloat类型，尾部缩进</td>
+</tr>
+<tr>
+<td>lineBreakMode</td>
+<td>CGFloat类型，断行方式</td>
+</tr>
+<tr>
+<td>minimumLineHeight</td>
+<td>CGFloat类型，最小行高</td>
+</tr>
+<tr>
+<td>maximumLineHeight</td>
+<td>CGFloat类型，最大行高 </td>
+</tr>
+<tr>
+<td>baseWritingDirection</td>
+<td>NSWritingDirection，句子方向</td>
+</tr>
+<tr>
+<td>lineHeightMultiple</td>
+<td>CGFloat类型，可变行高,乘因数</td>
+</tr>
+<tr>
+<td>paragraphSpacingBefore</td>
+<td>CGFloat类型，段首空间</td>
+</tr>
+<tr>
+<td>hyphenationFactor</td>
+<td>CGFloat类型，连字符属性 </td>
+</tr>
+</tbody>
+</table>
+<p>照例放Demo，仅供参考<br>Demo地址：<br><a href="https://github.com/yongliangP/AttributedStringDemo" target="_blank" rel="external">https://github.com/yongliangP/AttributedStringDemo</a><br>如果你觉得对你有帮助请点喜欢哦，也可以关注我，每周至少一篇技术。<br>或者关注 <a href="http://www.jianshu.com/collection/faae4d82e342" target="_blank" rel="external">我的专题</a> 每周至少5篇更新，多谢支持哈。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/07/UIWebView-WKWebView如何截图/" rel="next" title="UIWebView&WKWebView如何截图">
+                <i class="fa fa-chevron-left"></i> UIWebView&WKWebView如何截图
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/27/index/" rel="prev" title="iOS 自定义转场动画的那些事">
+                iOS 自定义转场动画的那些事 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/27/iOS中关于AttributedString的那些事儿/"
+           data-title="iOS中关于AttributedString的那些事儿" data-url="http://yoursite.com/2016/10/27/iOS中关于AttributedString的那些事儿/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="iceMaple" />
+          <p class="site-author-name" itemprop="name">iceMaple</p>
+          <p class="site-description motion-element" itemprop="description">iOS开发工程师</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yongliangP" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/b595ae45d705/latest_articles" target="_blank" title="JianShu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  JianShu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/b595ae45d705/latest_articles" title="iceMaple简书" target="_blank">iceMaple简书</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iceMaple</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"iceMaplee"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
