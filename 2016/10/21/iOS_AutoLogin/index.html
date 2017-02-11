@@ -1,0 +1,755 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS token cookie," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="关于 token服务器如何判断当前用户是否登录?短连接(http:)使用token 机制来验证用户安全性，相信大多数App在用户登录后都是给用户自己认证的 token，当然也会在登录时重新分配 token ,作为用户的唯一凭证。把App比作游乐场的话，token 就相当于门票（私人订制的门票），只要你的门票没有失效，你就可以玩耍游乐园的任何你可以玩的项目。
+
+token 值获取 当用户首次登录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 关于token、cookie的那些事">
+<meta property="og:url" content="http://yoursite.com/2016/10/21/iOS_AutoLogin/index.html">
+<meta property="og:site_name" content="iceMaple的博客">
+<meta property="og:description" content="关于 token服务器如何判断当前用户是否登录?短连接(http:)使用token 机制来验证用户安全性，相信大多数App在用户登录后都是给用户自己认证的 token，当然也会在登录时重新分配 token ,作为用户的唯一凭证。把App比作游乐场的话，token 就相当于门票（私人订制的门票），只要你的门票没有失效，你就可以玩耍游乐园的任何你可以玩的项目。
+
+token 值获取 当用户首次登录">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1429107-08c26ffdebb41f4e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-02-11T09:35:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 关于token、cookie的那些事">
+<meta name="twitter:description" content="关于 token服务器如何判断当前用户是否登录?短连接(http:)使用token 机制来验证用户安全性，相信大多数App在用户登录后都是给用户自己认证的 token，当然也会在登录时重新分配 token ,作为用户的唯一凭证。把App比作游乐场的话，token 就相当于门票（私人订制的门票），只要你的门票没有失效，你就可以玩耍游乐园的任何你可以玩的项目。
+
+token 值获取 当用户首次登录">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1429107-08c26ffdebb41f4e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6326686191303263000,
+      author: '小白'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/21/iOS_AutoLogin/"/>
+
+  <title> iOS 关于token、cookie的那些事 | iceMaple的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">iceMaple的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS 关于token、cookie的那些事
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-21T17:00:00+08:00" content="2016-10-21">
+              2016-10-21
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/21/iOS_AutoLogin/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/21/iOS_AutoLogin/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/1429107-08c26ffdebb41f4e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="cookie.jpg"></p>
+<ul>
+<li><p>关于 token<br>服务器如何判断当前用户是否登录?短连接(http:)使用token 机制来验证用户安全性，相信大多数App在用户登录后都是给用户自己认证的 <code>token</code>，当然也会在登录时重新分配 <code>token</code> ,作为用户的唯一凭证。把App比作游乐场的话，<code>token</code> 就相当于门票（私人订制的门票），只要你的门票没有失效，你就可以玩耍游乐园的任何你可以玩的项目。</p>
+</li>
+<li><p>token 值获取<br> 当用户首次登录成功之后, 服务器端就会生成一个 <code>token</code> 值.<br>1.服务器会将 <code>token</code> 值保存在数据库中。并将这个 <code>token</code> 值返回给客户端.<br>2.客户端拿到 <code>token</code> 值之后,一般保存在两个位置，将 <code>token</code> 保存在沙盒中,作为一个公共参数传递.或者将 <code>token</code> 保存在 <code>cookie</code> 中。</p>
+</li>
+<li><p>如何使用 token<br>以后客户端再次发送网络请求(不是登录请求)的时候,就会将这个 <code>token</code> 值附带到参数中发送给服务器.服务器接收到客户端的请求之后,会取出 <code>token</code> 值与保存在本地(数据库)中的 <code>token</code> 值做对比,如果两个 <code>token</code> 值相同就说明用户登录成功过，当前用户处于登录状态。如果没有这个 <code>token</code> 值, 没有登录成功。如果 <code>token</code> 值不同，说明原来的登录信息已经失效,这时告诉客户端让用户重新登录。</p>
+</li>
+<li><p>关于 cookie<br><code>cookie</code> 是服务端为了识别终端身份，保存在终端本地的用户凭证信息。<code>cookie</code> 中的字段与意义由服务端进行定义。例如，当用户在进行了登录操作后，服务端会将<code>cookie</code> 信息返回给终端，终端会将这些信息进行保存，在下一次再次访问服务端时，终端会将保存的<code>cookie</code> 信息一并发送到服务端，服务端根据<code>cookie</code> 信息是否有效来判断此用户是否可以进行一些行为。</p>
+</li>
+<li><p>token 和 cookie<br>既然 <code>token</code> 是用户的凭证信息，<code>cookie</code> 存储的是终端的用户凭证信息。那么 把 <code>token</code> 存在 <code>cookie</code> 中 ，服务器端就能准确够识别终端了。在客户端每次发起请求时就不用每次传 <code>token</code> 了，服务端从 <code>cookie</code> 中取就行。</p>
+</li>
+<li><p>在 iOS 中如何保存cookie</p>
+<blockquote>
+<p>把 <code>token</code>  变成一条 <code>cookie</code> 存进去，iOS 中有关键的两个类 <a href="https://developer.apple.com/reference/foundation/nshttpcookie#//apple_ref/occ/instm/NSHTTPCookie/version" target="_blank" rel="external">NSHTTPCookie</a>、<a href="https://developer.apple.com/reference/foundation/nshttpcookiestorage#//apple_ref/occ/clm/NSHTTPCookieStorage/sharedHTTPCookieStorage" target="_blank" rel="external">NSHTTPCookieStorage</a>，将信息交给 <code>NSHTTPCookie</code> ，变成可识别 <code>cookie</code> ,再存入 <code>NSHTTPCookieStorage</code> 中即可。<br>因为NSHTTPCookieStorage的默认策略是:<strong>NSHTTPCookieAcceptPolicyAlways</strong>。当你访问一个网站时，NSURLRequest都会帮你主动记录下来你访问的站点设置的Cookie，如果 Cookie 存在的话，会把这些信息放在 NSHTTPCookieStorage 容器中共享，当你下次再访问这个站点时，NSURLRequest会拿着上次保存下来了的Cookie继续去请求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">    NSMutableDictionary*cookieProperties = [NSMutableDictionary dictionary];</div><div class="line">    [cookieProperties setObject:@&quot;token&quot;  forKey:NSHTTPCookieName]; //给cookie取名</div><div class="line">    NSString * token = [kUserDefaults objectForKey:kAccessToken];</div><div class="line">    [cookieProperties setObject:hhz_token forKey:NSHTTPCookieValue];</div><div class="line">    [cookieProperties setObject:@&quot;/&quot; forKey:NSHTTPCookiePath]; //存放目录</div><div class="line">    NSString * domain = [NSURL URLWithString:kBaseUrl].host;</div><div class="line">    [cookieProperties setObject:domain forKey:NSHTTPCookieDomain]; //设置域名</div><div class="line">    NSHTTPCookie * httpCookie = [NSHTTPCookie cookieWithProperties:cookieProperties];</div><div class="line">    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:httpCookie]; //存入仓库</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p>文末附 <code>cookie</code> 可以赋予的属性</p>
+<ul>
+<li>在 iOS 中如何使用cookie<blockquote>
+<p>（1）一般在 App 启动时判断本地记录的值 该用户是否登录状态（即 <code>token</code> 为失效），如果是登录状态此时获取本地存取的 <code>token</code> 存为 <code>cookie</code> 。<br>（2）在登录完成时存 cookie 。<br>（3）在退出时清除 cookie 。<br><strong> 注：最好在 <code>token</code> 失效时和保存 <code>cookie</code> 前清除 <code>cookie</code> </strong></p>
+<pre><code>NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage]; 
+NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];    
+//删除token的那一条cookie
+for (NSHTTPCookie *tempCookie in cookies)
+{
+  if ([tempCookie.name isEqualToString:@&quot;token&quot;])
+  {
+    [cookieStorage deleteCookie:tempCookie];
+  } 
+ }
+</code></pre><p><strong>附</strong> ： HTTP cookie的属性键</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NSHTTPCookieName</td>
+<td>Cookie的名字</td>
+</tr>
+<tr>
+<td>NSHTTPCookieValue</td>
+<td>Cookie的值</td>
+</tr>
+<tr>
+<td>NSHTTPCookieOriginURL</td>
+<td>和域名一样,NSHTTPCookieDomain或NSHTTPCookieOriginURL必须指定一个值</td>
+</tr>
+<tr>
+<td>NSHTTPCookieVersion</td>
+<td>接收器的版本。 0版本的地图“旧式”的Netscape的cookie。 版本1映射到RFC 2965的cookies</td>
+</tr>
+<tr>
+<td>NSHTTPCookieDomain</td>
+<td>域名</td>
+</tr>
+<tr>
+<td>NSHTTPCookiePath</td>
+<td>Cookie 存放路径</td>
+</tr>
+<tr>
+<td>NSHTTPCookieSecure</td>
+<td>Cookie是否只应通过安全通道发送，设置Cookie的secure属性为true。只会在HTTPS和SSL等安全协议中传输此类Cookie。默认为false</td>
+</tr>
+<tr>
+<td>NSHTTPCookieComment</td>
+<td>包含Cookie的评论,只有有效的版本1的cookies或更高版本。 这头字段是可选的。</td>
+</tr>
+<tr>
+<td>NSHTTPCookieCommentURL</td>
+<td>接收器的评论URL。</td>
+</tr>
+<tr>
+<td>NSHTTPCookieDiscard</td>
+<td>Cookie是否应在会议结束时丢弃NSString,字符串值必须是“true”或“假”。 这个字段是可选的。 默认为“假”，除非这是Cookie是第1版或以上，NSHTTPCookieMaximumAge未指定，在这种情况下，它被假定为“TRUE” 。</td>
+</tr>
+<tr>
+<td>NSHTTPCookieMaximumAge</td>
+<td>NSString对象，包含一个整数,在Cookie内保持最多几秒 。仅适用于第1版和更高版本的有效。 默认为“0”。 此字段是可选的。</td>
+</tr>
+<tr>
+<td>NSHTTPCookiePort</td>
+<td>接收机的端口</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//version: 0  name:token   value : token值  expiresDate：cookie有效截止日期  created ：创建日期  sessionOnly: 返回接收器是否应该在会话结束时被丢弃 domain ：域名  partition: 端口  path:路径  isSecure:返回他的cookie不只应通过安全通道发送</div><div class="line">&lt;NSHTTPCookie version:0 name:&quot;token&quot; value:&quot;b2a8f8523ab41f8b4b9b2a79ff47c3f1&quot; expiresDate:(null) created:2016-11-09 03:02:41 +0000 sessionOnly:TRUE domain:&quot;api.test.com&quot; partition:&quot;none&quot; path:&quot;/&quot; isSecure:FALSE&gt;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-token-cookie/" rel="tag">#iOS token cookie</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/07/UIWebView-WKWebView如何截图/" rel="next" title="UIWebView&WKWebView如何截图">
+                <i class="fa fa-chevron-left"></i> UIWebView&WKWebView如何截图
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/27/iOS中关于AttributedString的那些事儿/" rel="prev" title="iOS中关于AttributedString的那些事儿">
+                iOS中关于AttributedString的那些事儿 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/21/iOS_AutoLogin/"
+           data-title="iOS 关于token、cookie的那些事" data-url="http://yoursite.com/2016/10/21/iOS_AutoLogin/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="iceMaple" />
+          <p class="site-author-name" itemprop="name">iceMaple</p>
+          <p class="site-description motion-element" itemprop="description">iOS开发工程师</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yongliangP" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/b595ae45d705/latest_articles" target="_blank" title="JianShu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  JianShu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/users/b595ae45d705/latest_articles" title="iceMaple简书" target="_blank">iceMaple简书</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iceMaple</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"iceMaplee"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
